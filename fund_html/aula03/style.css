@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'inter',sans-serif;
+    padding: ;
+}
+
+header{
+    background-color: rgb(60, 60, 216);
+    padding: 20px 100px 20px 100px ;
+}
+
+header h1{
+    color: #fff;
+}
+
+header form{
+    margin-top: 5px;
+}
+
+header input{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+header button{
+    background-color: red;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+section, article{
+    padding: 0 150px;
+}
+
+section button{
+    
+}
