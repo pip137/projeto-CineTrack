@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+:root {
+    --cor-primaria: linear-gradient(#2b0147, #31064e);
+    --cor-fundo: #31064e;
+    --cor-texto: #FFFFFF;
+    --cor-texto-secundario: #8F9CAE;
+    --raio: 8px;
+    --espaco: 16px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100px;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Raleway';
+    line-height: 1.5;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+    transition: background 200ms ease, transform 150ms;
+}
+
+button:hover {
+    background: var(--cor-fundo);
+    color: white;
+    transform: translateY(-2px);
+}
+button:focus-visible {
+    outline: 3px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+h1 {
+    font-size: clamp(1.2rem, 1rem + 2.5vw, 2.5rem);
+}
+
+header {
+    background-color: var(--cor-fundo);
+    padding: 12px 24px;
+    color: var(--cor-texto);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco);
+    flex-wrap: wrap;
+    border-radius: var(--raio);
+}
+
+header h1 {
+    flex: 0 0 auto;
+}
+
+header input {
+    flex: 1 1 240px;
+}
+
+header button {
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
+}
+
+nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 12px 24px;
+}
+
+.nav-adicionar button {
+    padding: 1px 20px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 10px;
+    color: var(--cor-fundo);
+}
+
+nav button {
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
+}
+
+nav button.ativo {
+    background: var(--cor-fundo);
+    color: white;
+}
+
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--espaco);
+    padding: 24px;
+}
+
+.card {
+    background: white;
+    color: var(--cor-fundo);
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: var(--raio);
+    box-shadow: 0 1px 4px #0002;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card .acoes {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.form-adicionar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--espaco);
+    padding: 24px;
+}
+
+.card-adicionar {
+    color: white;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: var(--raio);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+footer {
+    background: var(#31064e);
+    color: var(--cor-texto);
+    padding: 12px 24px;
+    text-align: center;
+}
