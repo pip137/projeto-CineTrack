@@ -9,7 +9,6 @@
     --espaco: 16px;
 }
 
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,14 +16,23 @@
 }
 
 html {
-    height: 100px;
     font-size: 16px;
+}
+
+main {
+     width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 
 body {
     font-family: 'Raleway';
     line-height: 1.5;
     background: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+a {
     color: var(--cor-texto);
 }
 
@@ -40,16 +48,17 @@ button {
 }
 
 button:hover {
-    background: var(--cor-fundo);
-    color: white;
-    transform: translateY(-2px);
+    background: white;
+    transform: translateY(-7px);
 }
+
 button:focus-visible {
     outline: 3px solid #4A90E2;
     outline-offset: 2px;
 }
 
 h1 {
+    flex: 0 0 auto;
     font-size: clamp(1.2rem, 1rem + 2.5vw, 2.5rem);
 }
 
@@ -63,10 +72,6 @@ header {
     gap: var(--espaco);
     flex-wrap: wrap;
     border-radius: var(--raio);
-}
-
-header h1 {
-    flex: 0 0 auto;
 }
 
 header input {
@@ -159,7 +164,7 @@ nav button.ativo {
 }
 
 footer {
-    background: var(#31064e);
+    background-color: var(--cor-fundo);
     color: var(--cor-texto);
     padding: 12px 24px;
     text-align: center;
@@ -179,9 +184,87 @@ table {
     padding: 12px 24px;
 }
 
+button, .btn {
+    font: inherit;
+    cursor: pointer;
+    transition: background 200ms ease, transform 150ms;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+button:hover, .btn:hover {
+    background: white;
+    transform: translateY(-7px);
+    color: var(--cor-fundo);
+}
+
+header button, header .btn {
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
+}
+
 figure {
     display: flex;
     flex-direction: column;
     width: 50%;
     padding: 12px 24px;
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    header input {
+        flex: 1 1 auto; 
+    }
+
+    nav {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    figure {
+        width: 100%;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+}
+
+.badge-assistido {
+    background-color: #2e7d32;
+}
+
+.badge-assistindo {
+    background-color: #f57c00;
+}
+
+.badge-quero {
+    background-color: #0277bd;
+}
+
+.edit-buttons .btn {
+    padding: 4px 12px;
+    background: #e0e0e0;
+    color: var(--cor-fundo);
+    border: none;
+    border-radius: 4px;
 }
