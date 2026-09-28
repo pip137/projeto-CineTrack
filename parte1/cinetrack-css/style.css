@@ -2,13 +2,14 @@
 
 :root {
     --cor-primaria: linear-gradient(#230338, #3f1858);
-    --cor-fundo: #3f1858;
+    --cor-fundo: #201738;
+    --cor-cabecalho: #6247aa;
+    --cor-navbar: #102b3f;
     --cor-texto: #FFFFFF;
     --cor-texto-secundario: #8F9CAE;
     --raio: 8px;
     --espaco: 16px;
 }
-
 
 * {
     box-sizing: border-box;
@@ -26,6 +27,11 @@ body {
     line-height: 1.5;
     background: var(--cor-fundo);
     color: var(--cor-texto);
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: repeat(3,auto);
+    flex-flow: column wrap;
+
 }
 
 img {
@@ -54,24 +60,77 @@ h1 {
 }
 
 header {
-    background-color: var(--cor-fundo);
-    padding: 12px 24px;
+    /* background-color: var(--cor-fundo); */
+    padding: 20px 0;
+    justify-content: center;
     color: var(--cor-texto);
     display: flex;
+    grid-column: span 3;
+    grid-row: 1;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--espaco);
     flex-wrap: wrap;
-    border-radius: var(--raio);
+    border-radius: 0px  0px var(--raio) var(--raio);
+    background-color: var(--cor-cabecalho);
+    min-height: 100px;
 }
 
-header h1 {
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
+}
+
+.logo h1 {
     flex: 0 0 auto;
+    font-size: 45px;
 }
 
-header input {
-    flex: 1 1 240px;
+
+.search{
+    display: flex;
+    width: 40%;
+    background-color: #FFFFFF;
+    align-items: center;
+    padding: 7px;
+    box-sizing: content-box;
+    border-radius: 100px;
 }
+
+.search #search{
+    font-size: 20px;
+    color: var(--cor-texto-secundario);
+}
+.search:focus-within{
+    outline: 1px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.search input{
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+header input::placeholder{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: var(--cor-texto-secundario);
+}
+header input:focus{
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+header input:hover{
+    border: none
+}
+
+
 
 header button {
     padding: 6px 14px;
@@ -81,14 +140,22 @@ header button {
     color: var(--cor-fundo);
 }
 
+#animated_images {
+    font-size: 50px;
+    line-height: 1;
+}
+
 nav {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     padding: 12px 24px;
+    /* grid-row: 2; */
+    grid-column: 2;
 }
 
 .nav-adicionar button {
+    font-size: 14px;
     padding: 1px 20px;
     border: 1px solid var(--cor-texto-secundario);
     background: var(--cor-texto);
@@ -97,11 +164,15 @@ nav {
 }
 
 nav button {
+    box-sizing: content-box;
+    height: fit-content;
+    width: fit-content;
     padding: 6px 14px;
     border: 1px solid var(--cor-texto-secundario);
     background: var(--cor-texto);
     border-radius: 999px;
     color: var(--cor-fundo);
+    font-size: 14px;
 }
 
 nav button.ativo {
@@ -109,14 +180,21 @@ nav button.ativo {
     color: white;
 }
 
+main{
+    /* grid-row: 2; */
+    grid-column: 2;
+}
+
 #lista {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: var(--espaco);
     padding: 24px;
+    
 }
 
 .card {
+    box-sizing: content-box;
     background: white;
     color: var(--cor-fundo);
     padding: 16px;
@@ -135,7 +213,8 @@ nav button.ativo {
 }
 
 .card img {
-    width: 100%;
+    max-width: 230px;
+    height: ;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 6px;
@@ -158,7 +237,14 @@ nav button.ativo {
     gap: 6px;
 }
 
+.edit-buttons{
+    display: flex;
+    gap: 8px
+}
+
 footer {
+    /* grid-row: 3; */
+    grid-column: 2;
     background: var(#31064e);
     color: var(--cor-texto);
     padding: 12px 24px;
@@ -184,4 +270,47 @@ figure {
     flex-direction: column;
     width: 50%;
     padding: 12px 24px;
+}
+
+/* nova parte do adicionar, fomulario mais estruturizado */
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    padding: 16px;
+    background-color: #FFFFFF;
+    border-radius: var(--raio);
+    max-width: 600px;
+    position: relative;
+}
+
+.formulario label{
+    color: var(--cor-fundo);
+    margin-top: 10px;
+}
+
+.formulario input{
+    color: var(--cor-fundo);
+    height: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-fundo);
+    outline: var(--cor-cabecalho);
+}
+
+.formulario #bt-save{
+    width: 200px;
+}
+
+.formulario #bt-cancel{
+    width: fit-content;
+    height: fit-content;
+    display:flex;
+    border-radius: 100px ;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    position: absolute;
+    left: 90%;
 }
