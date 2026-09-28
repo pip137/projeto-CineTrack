@@ -18,8 +18,13 @@
 }
 
 html {
-    height: 100px;
     font-size: 16px;
+}
+
+main {
+     width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 
 body {
@@ -34,6 +39,10 @@ body {
 
 }
 
+a {
+    color: var(--cor-texto);
+}
+
 img {
     max-width: 100%;
     display: block;
@@ -46,16 +55,17 @@ button {
 }
 
 button:hover {
-    background: var(--cor-fundo);
-    color: white;
-    transform: translateY(-2px);
+    background: white;
+    transform: translateY(-7px);
 }
+
 button:focus-visible {
     outline: 3px solid #4A90E2;
     outline-offset: 2px;
 }
 
 h1 {
+    flex: 0 0 auto;
     font-size: clamp(1.2rem, 1rem + 2.5vw, 2.5rem);
 }
 
@@ -214,7 +224,7 @@ main{
 
 .card img {
     max-width: 230px;
-    height: ;
+    /* height: ; */
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 6px;
@@ -263,6 +273,29 @@ table {
     border: 1px solid #ccc;
     border-radius: var(--raio);
     padding: 12px 24px;
+}
+
+button, .btn {
+    font: inherit;
+    cursor: pointer;
+    transition: background 200ms ease, transform 150ms;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+button:hover, .btn:hover {
+    background: white;
+    transform: translateY(-7px);
+    color: var(--cor-fundo);
+}
+
+header button, header .btn {
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
 }
 
 figure {
