@@ -45,7 +45,7 @@ button {
     transition: background 200ms ease, transform 150ms;
 }
 
-button:hover {
+.card,header button:hover {
     background: var(--cor-fundo);
     color: white;
     transform: translateY(-2px);
@@ -114,12 +114,15 @@ header {
     outline: none;
     background: transparent;
     box-shadow: none;
+    overflow: hidden;
 }
 
 header input::placeholder{
     background-color: rgba(0, 0, 0, 0);
     border: none;
     color: var(--cor-texto-secundario);
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 header input:focus{
     border: none;
@@ -182,19 +185,23 @@ nav button.ativo {
 
 main{
     /* grid-row: 2; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-column: 2;
 }
 
 #lista {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+    /* grid-template-rows: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); */
     gap: var(--espaco);
     padding: 24px;
     
 }
 
 .card {
-    box-sizing: content-box;
+    box-sizing: border-box;
     background: white;
     color: var(--cor-fundo);
     padding: 16px;
@@ -203,8 +210,35 @@ main{
     box-shadow: 0 1px 4px #0002;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 6px;
+    width: 100%;
+    transition: transform 200ms ease, box-shadow 200ms ease;
 }
+
+.card:hover {
+    transform: translateY(-4px);        
+    box-shadow: 0 8px 20px #0004;         
+}
+
+.card .comments {
+    display: none;    
+}
+
+.comments ,h2,p,small{
+    width: 100%;
+}
+
+.card .status{
+    background-color: #b8b5b5a9;
+    padding: 1px 5px;
+    border-radius: 20px;
+    display: flex;
+    margin-top: 10px;
+    margin-right: auto;
+}
+
+.card .status small{ color: #5e5e5e};
 
 .card .acoes {
     margin-top: auto;
@@ -213,8 +247,8 @@ main{
 }
 
 .card img {
-    max-width: 230px;
-    height: ;
+    height: auto;
+    width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 6px;
@@ -227,7 +261,7 @@ main{
     padding: 24px;
 }
 
-.card-adicionar {
+/* .card-adicionar {
     color: white;
     padding: 16px;
     border: 1px solid #ccc;
@@ -235,11 +269,29 @@ main{
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
+} */
 
 .edit-buttons{
     display: flex;
-    gap: 8px
+    gap: 8px;
+    margin-top: auto;
+}
+
+.edit-buttons button{
+    width: 100%;
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
+    font-size: 14px;
+}
+
+.edit-buttons .btn-remover:hover{
+    background: #ff6a6a8c;
+    border: 1px solid #943535a8;
+    color: #943535a8;
+    transform: translateY(-2px);
 }
 
 footer {
@@ -272,17 +324,69 @@ figure {
     padding: 12px 24px;
 }
 
-/* nova parte do adicionar, fomulario mais estruturizado */
+/* nova parte do adicionar.html, fomulario mais estruturizado */
 
-.formulario{
+.card-adicionar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: content-box;
+    width: 900px;
+    height: 600px;
+    position: relative;
+    /* overflow: hidden; */
+    border-radius: 8px;
+    border: 4px solid #fff
+}
+
+.card-adicionar::before{
+    content: "";
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    left: -4px;
+    border: 0;
+    border-left: 7px solid  var(--cor-cabecalho);
+    border-radius: 10px 0 0 10px;
+    /* background-color: ; */
+    z-index: 100;
+}
+
+.acoes{
     display: flex;
     flex-direction: column;
-    box-sizing: content-box;
-    padding: 16px;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.formulario{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0 24px;
     background-color: #FFFFFF;
-    border-radius: var(--raio);
-    max-width: 600px;
-    position: relative;
+    border-radius: 0 10px 10px 0;
+    width: 500px;
+    height: 100%;
+    justify-content: center;
+    z-index: 1;
+}
+
+.formulario .title{
+    display: flex;
+    flex-direction: row;
+    /* margin-top: auto; */
+}
+
+.formulario .title #camera_roll{
+    font-size: 25px;
+    color: #000;
+}
+
+.formulario .title h2{
+    margin-left: 10px;
+    color: var(--cor-cabecalho);
 }
 
 .formulario label{
@@ -299,6 +403,16 @@ figure {
     outline: var(--cor-cabecalho);
 }
 
+.formulario #ano,#genero,#status{
+    color: var(--cor-fundo);
+    height: 30px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-fundo);
+    outline: var(--cor-cabecalho);
+    width: 200px;
+}
+
 .formulario #bt-save{
     width: 200px;
 }
@@ -307,10 +421,26 @@ figure {
     width: fit-content;
     height: fit-content;
     display:flex;
+    padding: 4px;
     border-radius: 100px ;
     justify-content: center;
     align-items: center;
     border: none;
     position: absolute;
-    left: 90%;
+    left: 95%;
+    top: 2%;
+}
+
+.formulario #bt-cancel:hover{
+    background-color: #ff6a6a;
+    color: #943535;
+}
+
+.card-adicionar img {
+    justify-content: flex-end;
+    position: absolute;
+    border-radius: inherit;
+    right: 0;
+    z-index: 0;
+    height: inherit;
 }
