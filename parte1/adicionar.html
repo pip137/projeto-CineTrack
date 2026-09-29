@@ -57,49 +57,71 @@
         </form> -->
 
         <div class="card-adicionar">
-            <form action="#" method="post" class="formulario">
-
+            <form action="#" method="post" class="formulario" id="form-filme">
+ 
                 <div class="title">
                     <span class="material-symbols-outlined" id="camera_roll">camera_roll</span>
                     <h2>Adicione um filme!</h2>
                 </div>
-
-                <label for="titulo">Título</label>
-                <input id="titulo" name="titulo" type="text" placeholder="Digite o título">
-
-                <label for="ano">Ano</label>
-                <input id="ano" name="ano" type="date" placeholder="Digite o ano">
-
-                <label for="genero">Gênero</label>
-                <select id="genero" name="genero" required aria-placeholder="Escolha um gênero?">
-                        <option value="" disabled selected style="color:var(--cor-texto-secundario)">Escolha um gênero</option>
-                        <option value="ativo">Romance</option>
-                        <option value="pendente">Ficção-Cientifica</option>
-                        <option value="inativo">Drama</option>
-                        <option value="inativo">Comédia</option>
-                        <option value="inativo">Terror</option>
-                        <option value="inativo">Animação</option>
-                </select>
-
-                <label for="status">Status</label>
-                <select id="status" name="status" required>
-                        <option value="" disabled selected style="color:var(--cor-texto-secundario)">Escolha um status</option>
-                        <option value="ativo">Assistido</option>
-                        <option value="pendente">Assistindo</option>
-                        <option value="inativo">Quero assistir</option>
-                </select>
-
-                <label for="nota">Nota</label>
-                <input id="nota" name="nota" type="text" placeholder="Dê uma nota">
-                
-                <label for="comentario">Comentário</label>
-                <input id="comentario" name="comentario" type="text" placeholder="Coloque um comentário">
-
-                <label for="titulo">URL </label>
-                <input id="titulo" name="titulo" type="text" placeholder="Insira a Url da capa do filme">
-
-                <button type="submit" id="bt-save">Salvar</button>
-                <button type="button" id="bt-cancel" href="index.html"><span class="material-symbols-outlined">cancel</span></button>
+ 
+                <div class="campo campo-titulo">
+                    <label for="titulo">Título</label>
+                    <input id="titulo" name="titulo" type="text" placeholder="Digite o título" required>
+                </div>
+ 
+                <div class="campo campo-ano">
+                    <label for="ano">Ano</label>
+                    <input id="ano" name="ano" type="number" min="1888" max="2030" placeholder="Ex: 2024" required>
+                </div>
+ 
+                <div class="campo campo-genero">
+                    <label for="genero">Gênero</label>
+                    <select id="genero" name="genero" required>
+                        <option value="" disabled selected>Escolha um gênero</option>
+                        <option value="romance">Romance</option>
+                        <option value="ficcao">Ficção Científica</option>
+                        <option value="drama">Drama</option>
+                        <option value="comedia">Comédia</option>
+                        <option value="terror">Terror</option>
+                        <option value="animacao">Animação</option>
+                    </select>
+                </div>
+ 
+                <div class="campo campo-status">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="" disabled selected>Escolha um status</option>
+                        <option value="assistido">Assistido</option>
+                        <option value="assistindo">Assistindo</option>
+                        <option value="quero">Quero assistir</option>
+                    </select>
+                </div>
+ 
+                <fieldset class="campo campo-nota">
+                    <legend>Nota</legend>
+                    <label><input type="radio" name="nota" value="1" required> 1</label>
+                    <label><input type="radio" name="nota" value="2"> 2</label>
+                    <label><input type="radio" name="nota" value="3"> 3</label>
+                    <label><input type="radio" name="nota" value="4"> 4</label>
+                    <label><input type="radio" name="nota" value="5"> 5</label>
+                </fieldset>
+ 
+                <div class="campo campo-comentario">
+                    <label for="comentario">Comentário</label>
+                    <textarea id="comentario" name="comentario" rows="4" placeholder="Coloque um comentário"></textarea>
+                </div>
+ 
+                <div class="campo campo-url">
+                    <label for="url">URL do pôster</label>
+                    <input id="url" name="url" type="url" placeholder="Insira a URL da capa do filme">
+                </div>
+ 
+                <div class="campo campo-botoes">
+                    <button type="submit" id="bt-save">Salvar</button>
+                    <a href="index.html" id="bt-cancel" aria-label="Cancelar e voltar">
+                        <span class="material-symbols-outlined">cancel</span>
+                    </a>
+                </div>
             </form>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7iJ6Qd17DsTxC4YeI8_F6tO_ZGTSCqN1HVA2j8NbtUQ&s=10" alt="Poster de Filmes">
         </div>

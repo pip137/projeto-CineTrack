@@ -361,7 +361,16 @@ figure {
 
 .formulario{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
+    grid-template-areas:
+    'title title' 
+    'titulo titulo'
+    'ano genero'
+    'status nota'
+    'comentario comentario'
+    'url url'
+    'botoes botoes';
+    grid-template-rows: ;
     flex-direction: column;
     box-sizing: border-box;
     padding: 0 24px;
@@ -371,17 +380,28 @@ figure {
     height: 100%;
     justify-content: center;
     z-index: 1;
+    column-gap: 8px;
 }
+
+.campo-titulo { grid-area: titulo; display: flex; flex-direction: column; }
+.campo-ano { grid-area: ano; display: flex; flex-direction: column; }
+.campo-genero { grid-area: genero; display: flex; flex-direction: column; }
+.campo-status { grid-area: status; display: flex; flex-direction: column; }
+.campo-nota { grid-area: nota; display: flex; flex-direction: row; border: none; height: fit-content; }
+.campo-comentario { grid-area: comentario; display: flex; flex-direction: column; }
+.campo-url { grid-area: url; display: flex; flex-direction: column; }
+.campo-botoes {grid-area: botoes; display: flex; flex-direction: row;}
 
 .formulario .title{
     display: flex;
     flex-direction: row;
+    grid-column: span 2;
     /* margin-top: auto; */
 }
 
 .formulario .title #camera_roll{
     font-size: 25px;
-    color: #000;
+    color: var(--cor-cabecalho);
 }
 
 .formulario .title h2{
@@ -403,6 +423,7 @@ figure {
     outline: var(--cor-cabecalho);
 }
 
+
 .formulario #ano,#genero,#status{
     color: var(--cor-fundo);
     height: 30px;
@@ -412,6 +433,7 @@ figure {
     outline: var(--cor-cabecalho);
     width: 200px;
 }
+
 
 .formulario #bt-save{
     width: 200px;
@@ -443,4 +465,20 @@ figure {
     right: 0;
     z-index: 0;
     height: inherit;
+}
+
+@media (max-width: 700px) {
+    .card-adicionar {
+        flex-direction: column;
+        height: auto;
+    }
+    .card-adicionar img {
+        position: static;
+        width: 100%;
+        height: 200px;
+    }
+    .formulario {
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+    }
 }
