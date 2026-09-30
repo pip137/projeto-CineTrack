@@ -2,10 +2,11 @@
 
 :root {
     --cor-primaria: linear-gradient(#230338, #3f1858);
-    --cor-fundo: #201738;
-    --cor-cabecalho: #6247aa;
+    --cor-fundo: #312358;
+    --cor-cabecalho: #a100f2;
     --cor-navbar: #102b3f;
     --cor-texto: #FFFFFF;
+    --cor-footer: #240046;
     --cor-texto-secundario: #8F9CAE;
     --raio: 8px;
     --espaco: 16px;
@@ -324,6 +325,17 @@ figure {
     padding: 12px 24px;
 }
 
+footer{
+    background-color: var(--cor-footer);
+    grid-column: span 3;
+}
+
+.logo-uem img{
+    width: auto;
+    height: 200px;
+    fill: #fff;
+}
+
 /* nova parte do adicionar.html, fomulario mais estruturizado */
 
 .card-adicionar {
@@ -413,7 +425,7 @@ figure {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--cor-cabecalho);
+    background-color: var(--cor-footer);
     margin-left: 10px;
 }
 
@@ -461,8 +473,18 @@ figure {
 }
 
 
-.formulario #bt-save{
+.campo-botoes{
+    display: flex;
+    justify-content: center;
+}
+
+.formulario .campo-botoes #bt-save{
     width: 200px;
+    background-color: var(--cor-cabecalho);
+    color: #fff;
+    font-weight: 600;
+    border-radius: var(--raio);
+    height: 35px;
 }
 
 .formulario #bt-cancel{
