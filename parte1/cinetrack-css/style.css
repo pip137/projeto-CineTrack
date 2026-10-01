@@ -297,12 +297,13 @@ main{
 }
 
 footer {
-    /* grid-row: 3; */
-    grid-column: 2;
-    background: var(#31064e);
-    color: var(--cor-texto);
-    padding: 12px 24px;
-    text-align: center;
+    background-color: var(--cor-footer);
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .filmes-exemplo {
@@ -326,15 +327,6 @@ figure {
     padding: 12px 24px;
 }
 
-footer{
-    background-color: var(--cor-footer);
-    grid-column: span 3;
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
 
 /* .section-information{
     display: flex;
@@ -351,7 +343,7 @@ footer{
     justify-content: space-around;
     gap: 20px;
     flex-wrap: wrap;
-    
+    margin: 24px 0;
     /* height: 500px */
 }
 
@@ -376,8 +368,6 @@ footer{
 }
 
 .explanatory #cinetrack-text{
-    
-
 }
 
 .explanatory .content::after{
@@ -464,7 +454,37 @@ footer{
 }
 
 
+.direitos{
+    grid-column: span 3;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
 
+.direitos::before{
+    position: absolute;
+    content: "";
+    background-color: #fff;
+    height: 1px;
+    width: 100%;
+    top: -15px;
+    left: 0;
+}
+
+.direitos small{
+    width: fit-content;
+}
+
+.direitos a{
+    color: #fff;
+}
+
+.direitos a:hover{
+    color: #00b4d8;
+}
 
 /* nova parte do adicionar.html, fomulario mais estruturizado */
 
