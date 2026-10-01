@@ -384,8 +384,8 @@ figure {
     position: relative;
 }
 
-.explanatory #cinetrack-text{
-}
+/* .explanatory #cinetrack-text{
+} */
 
 .explanatory .content::after{
     position: absolute;
