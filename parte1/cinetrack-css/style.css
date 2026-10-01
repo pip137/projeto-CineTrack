@@ -19,7 +19,7 @@
 }
 
 html {
-    height: 100px;
+    height: 100vh;
     font-size: 16px;
 }
 
@@ -137,12 +137,18 @@ header input:hover{
 
 
 
-header button {
+header .btn {
     padding: 6px 14px;
     border: 1px solid var(--cor-texto-secundario);
     background: var(--cor-texto);
     border-radius: 999px;
     color: var(--cor-fundo);
+    text-decoration: none;
+}
+
+header .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #animated_images {
@@ -180,16 +186,18 @@ nav button {
     font-size: 14px;
 }
 
-nav button.ativo {
+.nav-adicionar button:hover, nav button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+nav button.ativo:hover {
     background: var(--cor-fundo);
     color: white;
 }
 
 main{
-    /* grid-row: 2; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
     grid-column: 2;
 }
 
@@ -232,15 +240,12 @@ main{
 }
 
 .card .status{
-    background-color: #b8b5b5a9;
     padding: 1px 5px;
-    border-radius: 20px;
-    display: flex;
     margin-top: 10px;
     margin-right: auto;
 }
 
-.card .status small{ color: #5e5e5e};
+.card .status small{ color: #5e5e5e;}
 
 .card .acoes {
     margin-top: auto;
@@ -279,7 +284,7 @@ main{
     margin-top: auto;
 }
 
-.edit-buttons button{
+.edit-buttons button, .edit-buttons .btn-editar{
     width: 100%;
     padding: 6px 14px;
     border: 1px solid var(--cor-texto-secundario);
@@ -287,12 +292,23 @@ main{
     border-radius: 999px;
     color: var(--cor-fundo);
     font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .edit-buttons .btn-remover:hover{
     background: #ff6a6a8c;
     border: 1px solid #943535a8;
     color: #943535a8;
+    transform: translateY(-2px);
+}
+
+.edit-buttons .btn-editar:hover{
+    background: #88ff6a8c;
+    border: 1px solid #359445a8;
+    color: #359451a8;
     transform: translateY(-2px);
 }
 
@@ -304,6 +320,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 40px;    /* Espaço acima do footer */
 }
 
 .filmes-exemplo {
@@ -341,9 +358,9 @@ figure {
     width: 100%;
     align-items:start;
     justify-content: space-around;
-    gap: 20px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin: 24px 0;
+    margin: 12px 0;
     /* height: 500px */
 }
 
@@ -499,7 +516,7 @@ figure {
     /* overflow: hidden; */
     border-radius: 8px;
     border: 10px solid #fff;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .card-adicionar::before{
@@ -679,4 +696,33 @@ figure {
         border-radius: 0 0 10px 10px;
         width: 100%;
     }
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+}
+
+.badge-assistido {
+    background-color: #2e7d32;
+}
+
+.badge-assistindo {
+    background-color: #f57c00;
+}
+
+.badge-quero {
+    background-color: #0277bd;
+}
+
+.edit-buttons .btn {
+    padding: 4px 12px;
+    background: #e0e0e0;
+    color: var(--cor-fundo);
+    border: none;
+    border-radius: 4px;
 }
