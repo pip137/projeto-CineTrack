@@ -2,10 +2,11 @@
 
 :root {
     --cor-primaria: linear-gradient(#230338, #3f1858);
-    --cor-fundo: #201738;
-    --cor-cabecalho: #6247aa;
+    --cor-fundo: #312358;
+    --cor-cabecalho: #a100f2;
     --cor-navbar: #102b3f;
     --cor-texto: #FFFFFF;
+    --cor-footer: #240046;
     --cor-texto-secundario: #8F9CAE;
     --raio: 8px;
     --espaco: 16px;
@@ -18,13 +19,8 @@
 }
 
 html {
+    height: 100px;
     font-size: 16px;
-}
-
-main {
-     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
 }
 
 body {
@@ -39,10 +35,6 @@ body {
 
 }
 
-a {
-    color: var(--cor-texto);
-}
-
 img {
     max-width: 100%;
     display: block;
@@ -54,18 +46,17 @@ button {
     transition: background 200ms ease, transform 150ms;
 }
 
-button:hover {
-    background: white;
-    transform: translateY(-7px);
+.card,header button:hover {
+    background: var(--cor-fundo);
+    color: white;
+    transform: translateY(-2px);
 }
-
 button:focus-visible {
     outline: 3px solid #4A90E2;
     outline-offset: 2px;
 }
 
 h1 {
-    flex: 0 0 auto;
     font-size: clamp(1.2rem, 1rem + 2.5vw, 2.5rem);
 }
 
@@ -84,6 +75,7 @@ header {
     border-radius: 0px  0px var(--raio) var(--raio);
     background-color: var(--cor-cabecalho);
     min-height: 100px;
+    width: 100%;
 }
 
 .logo{
@@ -124,12 +116,15 @@ header {
     outline: none;
     background: transparent;
     box-shadow: none;
+    overflow: hidden;
 }
 
 header input::placeholder{
     background-color: rgba(0, 0, 0, 0);
     border: none;
     color: var(--cor-texto-secundario);
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 header input:focus{
     border: none;
@@ -192,19 +187,23 @@ nav button.ativo {
 
 main{
     /* grid-row: 2; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-column: 2;
 }
 
 #lista {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+    /* grid-template-rows: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); */
     gap: var(--espaco);
     padding: 24px;
     
 }
 
 .card {
-    box-sizing: content-box;
+    box-sizing: border-box;
     background: white;
     color: var(--cor-fundo);
     padding: 16px;
@@ -213,8 +212,35 @@ main{
     box-shadow: 0 1px 4px #0002;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 6px;
+    width: 100%;
+    transition: transform 200ms ease, box-shadow 200ms ease;
 }
+
+.card:hover {
+    transform: translateY(-4px);        
+    box-shadow: 0 8px 20px #0004;         
+}
+
+.card .comments {
+    display: none;    
+}
+
+.comments ,h2,p,small{
+    width: 100%;
+}
+
+.card .status{
+    background-color: #b8b5b5a9;
+    padding: 1px 5px;
+    border-radius: 20px;
+    display: flex;
+    margin-top: 10px;
+    margin-right: auto;
+}
+
+.card .status small{ color: #5e5e5e};
 
 .card .acoes {
     margin-top: auto;
@@ -223,8 +249,8 @@ main{
 }
 
 .card img {
-    max-width: 230px;
-    /* height: ; */
+    height: auto;
+    width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 6px;
@@ -237,7 +263,7 @@ main{
     padding: 24px;
 }
 
-.card-adicionar {
+/* .card-adicionar {
     color: white;
     padding: 16px;
     border: 1px solid #ccc;
@@ -245,20 +271,39 @@ main{
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
+} */
 
 .edit-buttons{
     display: flex;
-    gap: 8px
+    gap: 8px;
+    margin-top: auto;
+}
+
+.edit-buttons button{
+    width: 100%;
+    padding: 6px 14px;
+    border: 1px solid var(--cor-texto-secundario);
+    background: var(--cor-texto);
+    border-radius: 999px;
+    color: var(--cor-fundo);
+    font-size: 14px;
+}
+
+.edit-buttons .btn-remover:hover{
+    background: #ff6a6a8c;
+    border: 1px solid #943535a8;
+    color: #943535a8;
+    transform: translateY(-2px);
 }
 
 footer {
-    /* grid-row: 3; */
-    grid-column: 2;
-    background: var(#31064e);
-    color: var(--cor-texto);
-    padding: 12px 24px;
-    text-align: center;
+    background-color: var(--cor-footer);
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .filmes-exemplo {
@@ -275,29 +320,6 @@ table {
     padding: 12px 24px;
 }
 
-button, .btn {
-    font: inherit;
-    cursor: pointer;
-    transition: background 200ms ease, transform 150ms;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
-
-button:hover, .btn:hover {
-    background: white;
-    transform: translateY(-7px);
-    color: var(--cor-fundo);
-}
-
-header button, header .btn {
-    padding: 6px 14px;
-    border: 1px solid var(--cor-texto-secundario);
-    background: var(--cor-texto);
-    border-radius: 999px;
-    color: var(--cor-fundo);
-}
-
 figure {
     display: flex;
     flex-direction: column;
@@ -305,22 +327,279 @@ figure {
     padding: 12px 24px;
 }
 
-/* nova parte do adicionar, fomulario mais estruturizado */
 
-.formulario{
+/* .section-information{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+} */
+
+.section-information{
+    display: flex;
+    grid-column: 2;
+    width: 100%;
+    align-items:start;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+    /* height: 500px */
+}
+
+.explanatory{
     display: flex;
     flex-direction: column;
-    box-sizing: content-box;
-    padding: 16px;
-    background-color: #FFFFFF;
-    border-radius: var(--raio);
-    max-width: 600px;
+    align-items: start;
+    width: min(230px, 100%);
+    gap: 10px;
+}
+
+.explanatory .label{
+    position: relative;
+    width: fit-content;
+    text-align: left;
+}
+
+.explanatory .content{
+    text-align: justify;
+    width: fit-content;
     position: relative;
 }
 
-.formulario label{
+/* .explanatory #cinetrack-text{
+} */
+
+.explanatory .content::after{
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    content: "";
+    left: 0;
+    top: -6px;
+    background-color: #fff
+}
+
+.html,.css,.js{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#html,#css,#js{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 40px;
+    margin-top: 5px;
+}
+
+#html{background-color: #bd1e1e;}
+#css{background-color: #124e78; color: #a2d6f9}
+#js{background-color: #f2bb05; color: #000;}
+
+
+.author{
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    grid-template-rows: repeat(2, max-content);
+    column-gap: 8px;
+}
+
+.author span{
+    grid-column: 1;
+    grid-row: span 2;
+    height: 100%;
+    width: auto;
+}
+
+.logo-uem{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo-uem img{
+    width: auto;
+    height: 100px;
+    filter: brightness(0) invert(1);
+}
+
+.address{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    width: 230px;
+    position: relative;
+    flex-wrap: nowrap;
+}
+
+.address small{
+    text-align: justify;
+    width: fit-content;
+}
+
+.section-address::before{
+    content: "";
+    height: 2px;
+    width: inherit;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: -10px;
+}
+
+
+.direitos{
+    grid-column: span 3;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.direitos::before{
+    position: absolute;
+    content: "";
+    background-color: #fff;
+    height: 1px;
+    width: 100%;
+    top: -15px;
+    left: 0;
+}
+
+.direitos small{
+    width: fit-content;
+}
+
+.direitos a{
+    color: #fff;
+}
+
+.direitos a:hover{
+    color: #00b4d8;
+}
+
+/* nova parte do adicionar.html, fomulario mais estruturizado */
+
+.card-adicionar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: content-box;
+    width: 900px;
+    height: 600px;
+    position: relative;
+    /* overflow: hidden; */
+    border-radius: 8px;
+    border: 10px solid #fff;
+    margin-top: 100px;
+}
+
+.card-adicionar::before{
+    content: "";
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    border: 0;
+    border-left: 7px solid  var(--cor-cabecalho);
+    border-radius: 10px 0 0 10px;
+    /* background-color: ; */
+    z-index: 100;
+}
+
+.acoes{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.formulario{
+    display: grid;
+    /* grid-template-columns: 1fr 1fr; */
+    grid-template-areas:
+    'title title' 
+    'titulo titulo'
+    'ano genero'
+    'status nota'
+    'comentario comentario'
+    'url url'
+    'botoes botoes';
+    /* grid-template-rows: repeat(auto-fit, fit-content); */
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0 24px;
+    background-color: #FFFFFF;
+    border-radius: 0 10px 10px 0;
+    width: 500px;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    z-index: 1;
+    column-gap: 8px;
+    row-gap: 8px;
+}
+
+.campo-titulo { grid-area: titulo; display: flex; flex-direction: column; }
+.campo-ano { grid-area: ano; display: flex; flex-direction: column;}
+.campo-genero { grid-area: genero; display: flex; flex-direction: column; }
+.campo-status { grid-area: status; display: flex; flex-direction: column; }
+.campo-nota { grid-area: nota; display: flex; flex-direction: row; border: none; }
+.campo-comentario { grid-area: comentario; display: flex; flex-direction: column; }
+.campo-url { grid-area: url; display: flex; flex-direction: column; }
+.campo-botoes {grid-area: botoes; display: flex; flex-direction: row;}
+
+.formulario .title{
+    display: flex;
+    flex-direction: row;
+    grid-column: span 2;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+
+}
+
+.formulario .title::after{
+    content: "";
+    flex: 1;
+    position:absolute;
+    left: -10px;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--cor-footer);
+    margin-left: 10px;
+}
+
+.formulario .title #camera_roll{
+    font-size: 25px;
+    color: var(--cor-cabecalho);
+}
+
+.formulario .title h2{
+    margin-left: 10px;
+    font-size: 30px;
+    color: var(--cor-cabecalho);
+}
+
+.formulario .campo label{
     color: var(--cor-fundo);
-    margin-top: 10px;
+}
+
+.formulario .campo-nota label{
+    display: flex;
+    flex-direction: column;
+    color: var(--cor-fundo);
+    margin-left: 5px;
+    /* margin-top: 10px; */
 }
 
 .formulario input{
@@ -332,18 +611,72 @@ figure {
     outline: var(--cor-cabecalho);
 }
 
-.formulario #bt-save{
+
+.formulario #ano,#genero,#status{
+    color: var(--cor-fundo);
+    height: 30px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-fundo);
+    outline: var(--cor-cabecalho);
     width: 200px;
+}
+
+
+.campo-botoes{
+    display: flex;
+    justify-content: center;
+}
+
+.formulario .campo-botoes #bt-save{
+    width: 200px;
+    background-color: var(--cor-cabecalho);
+    color: #fff;
+    font-weight: 600;
+    border-radius: var(--raio);
+    height: 35px;
 }
 
 .formulario #bt-cancel{
     width: fit-content;
     height: fit-content;
     display:flex;
+    padding: 4px;
     border-radius: 100px ;
     justify-content: center;
     align-items: center;
     border: none;
     position: absolute;
-    left: 90%;
+    left: 95%;
+    top: 2%;
+}
+
+.formulario #bt-cancel:hover{
+    background-color: #ff6a6a;
+    color: #943535;
+}
+
+.card-adicionar img {
+    justify-content: flex-end;
+    position: absolute;
+    border-radius: inherit;
+    right: 0;
+    z-index: 0;
+    height: inherit;
+}
+
+@media (max-width: 700px) {
+    .card-adicionar {
+        flex-direction: column;
+        height: auto;
+    }
+    .card-adicionar img {
+        position: static;
+        width: 100%;
+        height: 200px;
+    }
+    .formulario {
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+    }
 }
