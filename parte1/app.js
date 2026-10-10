@@ -15,9 +15,13 @@ function criarCard(f){
     const spanBadge = document.createElement("span");
     spanBadge.className = "badge badge-assistindo";
     status.appendChild(spanBadge);
-    const genero = document.createElement("p")
-
-    card.append(titulo);
+    const genero = document.createElement("p");
+    genero.textContent = f.genero;
+    const areaNota = criaNotaSelecao(f.nota, (novaNota) => {
+        f.nota
+    });
+    card.append(imagem, titulo, genero, status, areaNota);
+    return card;
 }
 
 
@@ -72,7 +76,6 @@ function criaNotaSelecao(notaInicial = 0, aoMudar = () => {}){
 
     pintar(notaAtual);
     return divNota;
-
 }
 
 
