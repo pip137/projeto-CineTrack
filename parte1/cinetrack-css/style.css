@@ -268,16 +268,6 @@ main{
     padding: 24px;
 }
 
-/* .card-adicionar {
-    color: white;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: var(--raio);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-} */
-
 .edit-buttons{
     display: flex;
     gap: 8px;
@@ -343,14 +333,6 @@ figure {
     width: 50%;
     padding: 12px 24px;
 }
-
-
-/* .section-information{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-} */
 
 .section-information{
     display: flex;
@@ -513,13 +495,14 @@ figure {
     flex-direction: row;
     align-items: center;
     box-sizing: content-box;
-    width: 900px;
-    height: 600px;
+    width: 100%;
+    max-width: 900px;
+    height: auto; 
+    min-height: 500px;
+    max-height: 90vh;
     position: relative;
-    /* overflow: hidden; */
     border-radius: 8px;
     border: 10px solid #fff;
-    margin-top: 50px;
 }
 
 .card-adicionar::before{
@@ -728,4 +711,26 @@ figure {
     color: var(--cor-fundo);
     border: none;
     border-radius: 4px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
+
+.modal-overlay .card-adicionar {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.95);
 }
