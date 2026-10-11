@@ -108,13 +108,33 @@ function criaNotaSelecao(notaInicial = 0, aoMudar = () => {}){
     pintar(notaAtual);
     return divNota;
 }
+});
 
-
-function rotuloStatus(status){
-    if (status === "assistido") return "Assistido";
-    if (status === "assistindo") return "Assistindo";
-    if (status === "quero") return "Quero assisir";
-    return status;
+function debounce(fn, ms = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), ms);
+    };
 }
 
+const busca = document.querySelector("header input[type='search']");
+const aoDigitar = (e) => {
+    termoAtual = e.target.value;
+    atualizar();
+};
+busca.addEventListener("input", debounce(aoDigitar, 300));
 
+const navFiltros = document.querySelector("nav");
+navFiltros.addEventListener("click", (e) => {
+    const botao = e.target.closest("button");
+    if (!botao) return;
+
+    navFiltros.querySelector(".ativo").classList.remove("ativo");
+    botao.classList.add("ativo");
+    
+    statusAtual = botao.dataset.status;
+    atualizar();
+});
+
+atualizar();
