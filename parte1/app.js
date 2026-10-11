@@ -6,6 +6,12 @@ const filmesIniciais = [
     { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar", nota: 5, status: "quero", comentario: "" },
     { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4, status: "quero", comentario: "" }
 ];
+function rotuloStatus(status) {
+    if (status === "assistido") return "Assistido";
+    if (status === "assistindo") return "Assistindo";
+    if (status === "quero") return "Quero assistir";
+    return status; 
+}
     const card = document.createElement("article");
     card.className = "card";
     card.dataset.id = f.id;
