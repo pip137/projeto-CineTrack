@@ -1,26 +1,57 @@
-const listaFilmes = [];
-
-
-
-function criarCard(f){
+const filmesIniciais = [
+    { id: 1, titulo: "A Origem", ano: 2010, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=A+Origem", nota: 5, status: "assistido", comentario: "Revejo sempre." },
+    { id: 2, titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://placehold.co/200x300?text=Parasita", nota: 4, status: "assistido", comentario: "" },
+    { id: 3, titulo: "O Auto da Compadecida", ano: 2000, genero: "Comédia", poster: "https://placehold.co/200x300?text=Compadecida", nota: 5, status: "assistido", comentario: "Classico nacional." },
+    { id: 4, titulo: "Duna: Parte Dois", ano: 2024, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Duna+2", nota: 4, status: "assistindo", comentario: "" },
+    { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar", nota: 5, status: "quero", comentario: "" },
+    { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4, status: "quero", comentario: "" }
+];
+function rotuloStatus(status) {
+    if (status === "assistido") return "Assistido";
+    if (status === "assistindo") return "Assistindo";
+    if (status === "quero") return "Quero assistir";
+    return status; 
+}
+function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
     card.dataset.id = f.id;
+
+    const img = document.createElement("img");
+    img.src = f.poster || "https://placehold.co/200x300?text=Sem+Capa";
+    img.alt = `Poster de ${f.titulo}`;
+
+    const divStatus = document.createElement("div");
+    divStatus.className = "status";
+    const spanStatus = document.createElement("span");
+    spanStatus.className = `badge badge-${f.status}`; 
+    spanStatus.textContent = rotuloStatus(f.status);
+    divStatus.appendChild(spanStatus);
+
     const titulo = document.createElement("h2");
     titulo.textContent = f.titulo;
-    const imagem = document.createElement("img");
-    imagem.src = f.imagem;
-    const status = document.createElement("div");
-    status.className = "status";
-    const spanBadge = document.createElement("span");
-    spanBadge.className = "badge badge-assistindo";
-    status.appendChild(spanBadge);
-    const genero = document.createElement("p");
-    genero.textContent = f.genero;
-    const areaNota = criaNotaSelecao(f.nota, (novaNota) => {
-        f.nota
-    });
-    card.append(imagem, titulo, genero, status, areaNota);
+    
+    const anoGenero = document.createElement("p");
+    anoGenero.textContent = `${f.ano} - ${f.genero}`;
+
+    const pNota = document.createElement("p");
+    pNota.textContent = `Nota: ${estrelas(f.nota)}`;
+
+    const divAcoes = document.createElement("div");
+    divAcoes.className = "edit-buttons";
+    const btnEditar = document.createElement("button");
+    btnEditar.className = "btn-editar";
+    btnEditar.textContent = "Editar";
+    const btnRemover = document.createElement("button");
+    btnRemover.className = "btn-remover";
+    btnRemover.textContent = "Remover";
+    divAcoes.append(btnEditar, btnRemover);
+
+    const pComentario = document.createElement("p");
+    pComentario.className = "comments";
+    if (f.comentario) pComentario.textContent = f.comentario;
+
+    card.append(img, divStatus, titulo, anoGenero, pNota, divAcoes, pComentario);
     return card;
 }
 
@@ -77,13 +108,33 @@ function criaNotaSelecao(notaInicial = 0, aoMudar = () => {}){
     pintar(notaAtual);
     return divNota;
 }
+});
 
-
-function rotuloStatus(status){
-    if (status === "assistido") return "Assistido";
-    if (status === "assistindo") return "Assistindo";
-    if (status === "quero") return "Quero assisir";
-    return status;
+function debounce(fn, ms = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), ms);
+    };
 }
 
+const busca = document.querySelector("header input[type='search']");
+const aoDigitar = (e) => {
+    termoAtual = e.target.value;
+    atualizar();
+};
+busca.addEventListener("input", debounce(aoDigitar, 300));
 
+const navFiltros = document.querySelector("nav");
+navFiltros.addEventListener("click", (e) => {
+    const botao = e.target.closest("button");
+    if (!botao) return;
+
+    navFiltros.querySelector(".ativo").classList.remove("ativo");
+    botao.classList.add("ativo");
+    
+    statusAtual = botao.dataset.status;
+    atualizar();
+});
+
+atualizar();

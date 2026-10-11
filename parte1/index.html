@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +16,16 @@
         </div>
         <div class="search">
             <span class="material-symbols-outlined" id="search">search</span>
-            <input type="search" aria-label="Buscar filme" placeholder="Busuqe um filme">
+            <input type="search" aria-label="Buscar filme" placeholder="Busque um filme">
         </div>
-        <a href="cinetrack-html/adicionar.html" class="btn">+ Adicionar</a>
+        <button class="btn" id="btn-adicionar">+ Adicionar</button>
     </header>
 
     <nav aria-label="Filtros de status">
-        <button class="ativo">Todos</button>
-        <button>Assistido</button>
-        <button>Assistindo</button>
-        <button>Quero assistir</button>
+        <button class="ativo" data-status="todos">Todos</button>
+        <button data-status="assistido">Assistido</button>
+        <button data-status="assistindo">Assistindo</button>
+        <button data-status="quero">Quero assistir</button>
     </nav>
 
     <main>
@@ -196,19 +196,18 @@
                     </div>
                 </div>
                 <div class="logo-uem">
-                    <img src="./cinetrack-img/uem-modelo-02.svg" alt="logo-uem"></img>
+                    <img src="./cinetrack-img/uem-modelo-02.svg" alt="logo-uem">
                     <div class="address">
                         <small>Av. Colombo, 5790 - Jd. Universitário</small>
                         <small>CEP 87020-900 - Maringá - PR - BR</small>
-                        <small></small>
                     </div>
                 </div>
         </div>
         <div class="direitos">
             <small>CineTrack - UEM | Direitos &copy; 2026</small>
-            <a href="sobre.html">Sobre o CineTrack</a>
+            <a href="cinetrack-html/sobre.html">Sobre o CineTrack</a>
         </div>
     </footer>
-    <script src="app.js"> </script>
+    <script src="app.js"></script>
 </body>
 </html>
