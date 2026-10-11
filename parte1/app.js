@@ -12,24 +12,46 @@ function rotuloStatus(status) {
     if (status === "quero") return "Quero assistir";
     return status; 
 }
+function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
     card.dataset.id = f.id;
+
+    const img = document.createElement("img");
+    img.src = f.poster || "https://placehold.co/200x300?text=Sem+Capa";
+    img.alt = `Poster de ${f.titulo}`;
+
+    const divStatus = document.createElement("div");
+    divStatus.className = "status";
+    const spanStatus = document.createElement("span");
+    spanStatus.className = `badge badge-${f.status}`; 
+    spanStatus.textContent = rotuloStatus(f.status);
+    divStatus.appendChild(spanStatus);
+
     const titulo = document.createElement("h2");
     titulo.textContent = f.titulo;
-    const imagem = document.createElement("img");
-    imagem.src = f.imagem;
-    const status = document.createElement("div");
-    status.className = "status";
-    const spanBadge = document.createElement("span");
-    spanBadge.className = "badge badge-assistindo";
-    status.appendChild(spanBadge);
-    const genero = document.createElement("p");
-    genero.textContent = f.genero;
-    const areaNota = criaNotaSelecao(f.nota, (novaNota) => {
-        f.nota
-    });
-    card.append(imagem, titulo, genero, status, areaNota);
+    
+    const anoGenero = document.createElement("p");
+    anoGenero.textContent = `${f.ano} - ${f.genero}`;
+
+    const pNota = document.createElement("p");
+    pNota.textContent = `Nota: ${estrelas(f.nota)}`;
+
+    const divAcoes = document.createElement("div");
+    divAcoes.className = "edit-buttons";
+    const btnEditar = document.createElement("button");
+    btnEditar.className = "btn-editar";
+    btnEditar.textContent = "Editar";
+    const btnRemover = document.createElement("button");
+    btnRemover.className = "btn-remover";
+    btnRemover.textContent = "Remover";
+    divAcoes.append(btnEditar, btnRemover);
+
+    const pComentario = document.createElement("p");
+    pComentario.className = "comments";
+    if (f.comentario) pComentario.textContent = f.comentario;
+
+    card.append(img, divStatus, titulo, anoGenero, pNota, divAcoes, pComentario);
     return card;
 }
 
