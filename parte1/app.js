@@ -92,6 +92,38 @@ function atualizar() {
     const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
     renderizarCards(visiveis);
 }
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    divErros.textContent = "";
+
+    const dados = Object.fromEntries(new FormData(form));
+    dados.ano = Number(dados.ano);
+    dados.nota = Number(dados.nota);
+
+    const { valido, erros } = validarFilme(dados);
+    if (!valido) {
+        divErros.innerHTML = erros.join("<br>");
+        return;
+    }
+
+    const filmeProcessado = {
+        titulo: dados.titulo, ano: dados.ano, genero: dados.genero,
+        status: dados.status, nota: dados.nota, comentario: dados.comentario || "",
+        poster: dados.url || "https://placehold.co/200x300?text=Sem+Capa"
+    };
+
+    if (editandoId !== null) {
+        filmes = filmes.map((f) => f.id === editandoId ? { ...f, ...filmeProcessado, id: editandoId } : f);
+    } else {
+        filmes = [...filmes, { ...filmeProcessado, id: gerarId(filmes) }];
+    }
+
+    salvar();
+    form.reset();
+    fechar();
+    atualizar();
+});
+
 lista.addEventListener("click", (e) => {
     const btnRemover = e.target.closest(".btn-remover");
     if (btnRemover) {
