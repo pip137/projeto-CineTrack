@@ -31,6 +31,12 @@ function validarFilme(filme) {
 const gerarId = (lista) => 
     Math.max(0, ...lista.map((f) => f.id)) + 1;
 
+function aplicarFiltros(lista, opcoes) {
+    const termo = opcoes.termo.toLowerCase();
+    return lista
+        .filter((f) => f.titulo.toLowerCase().includes(termo))
+        .filter((f) => opcoes.status === "todos" || f.status === opcoes.status);
+}
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
