@@ -92,6 +92,27 @@ function atualizar() {
     const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
     renderizarCards(visiveis);
 }
+lista.addEventListener("click", (e) => {
+    const btnRemover = e.target.closest(".btn-remover");
+    if (btnRemover) {
+        if (!confirm("Remover este filme?")) return;
+        const id = Number(btnRemover.closest(".card").dataset.id);
+        filmes = filmes.filter((f) => f.id !== id);
+        salvar();
+        atualizar();
+        return;
+    }
+
+    const btnEditar = e.target.closest(".btn-editar");
+    if (btnEditar) {
+        editandoId = Number(btnEditar.closest(".card").dataset.id);
+        const f = filmes.find((x) => x.id === editandoId);
+        form.elements.titulo.value = f.titulo; form.elements.ano.value = f.ano;
+        form.elements.genero.value = f.genero; form.elements.status.value = f.status;
+        form.elements.nota.value = f.nota; form.elements.comentario.value = f.comentario;
+        form.elements.url.value = f.poster;
+        divErros.textContent = "";
+        abrir();
 }
 });
 
