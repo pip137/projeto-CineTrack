@@ -83,58 +83,11 @@ function criarCard(f) {
     return card;
 }
 
-
-function criaNotaSelecao(notaInicial = 0, aoMudar = () => {}){
-    const TOTAL = 5;
-    let notaAtual = notaInicial;
-
-    const divNota = document.createElement("div");
-    const labelNota = document.createElement("p");
-    const estrelas = [];
-    
-
-
-    divNota.className = "area-nota";
-    divNota.style.display = "flex";
-    divNota.style.gap = "10px";
-    divNota.setAttribute("role","radiogroup");
-    divNota.classList.add("estrelas");
-
-    labelNota.className = "label";
-    labelNota.textContent ="Nota:";
-
-    nota.append(labelNota)
-
-    const pintar = (ate) => {
-        estrela.forEach((btn, i) => {
-            btn.textContent = i < ate ? "☆" : "★";
-            btn.classList.toggle("ativa", i < ate);
-            btn.setAttribute("aria-checked", i + 1 === notaAtual);
-        });
-    }
-
-    for (let i = 1; i <= TOTAL; i++){
-        const estrela = document.createElement("button");
-        estrela.className = "estrela";
-        estrela.type = "button";
-        estrela.setAttribute("role", "radio");
-
-        estrela.addEventListener("mouseenter", () => pintar(i))
-        estrela.addEventListener("focus", () => pintar(i))
-        estrela.addEventListener("mouseenter", () => {
-            notaAtual = notaAtual === 1 ? 0 : i;
-            pintar(notaAtual);
-            aoMudar(notaAtual);
-        })
-        estrelas.push(estrelas);
-        divNota.append(estrela);
-    }
-
-    divNota.addEventListener("mouseleave", () => pintar(notaAtual));
-    divNota.addEventListener("focusout", () => pintar(notaAtual));
-
-    pintar(notaAtual);
-    return divNota;
+function renderizarCards(listaDeFilmes) {
+    const frag = document.createDocumentFragment();
+    listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
+    lista.replaceChildren(frag);
+}
 }
 });
 
