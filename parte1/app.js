@@ -88,6 +88,10 @@ function renderizarCards(listaDeFilmes) {
     listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
     lista.replaceChildren(frag);
 }
+function atualizar() {
+    const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
+    renderizarCards(visiveis);
+}
 }
 });
 
