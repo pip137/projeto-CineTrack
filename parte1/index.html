@@ -29,128 +29,78 @@
     </nav>
 
     <main>
-        <section id="lista" aria-live="polite">
-            <article class="card">
-                <img src="https://image.tmdb.org/t/p/w600_and_h900_face/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg" 
-                alt="Poster de A Origem">
-                <div class="status">
-                    <span class="badge badge-assistindo">Assistindo</span>
-                </div>
-                <h2>A Origem</h2>
-                <p>2010 - Ficção científica</p>
-                <p>
-                    Nota: ☆☆☆☆☆
-                </p>
-                
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments"> comentario </p>
-            </article>
+        <section id="lista" aria-live="polite"></section>
 
-            <article class="card">
-                <img src="https://image.tmdb.org/t/p/w600_and_h900_face/igw938inb6Fy0YVcwIyxQ7Lu5FO.jpg" 
-                alt="Poster de Parasita">
-                <div class="status">
-                    <span class="badge badge-assistido">Assistido</span>
-                </div>
-                <h2>Parasita</h2>
-                <p>2019 - Suspense</p>
-                <p>
-                    Nota: ☆☆☆☆☆
-                </p>
-                
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments">
-                    Filme muito bom, apesar de eu não gostar da motivação para o ato final.
-                </p>
-            </article>
-
-            <article class="card">
-                <img src="https://image.tmdb.org/t/p/w600_and_h900_face/imcOp1kJsCsAFCoOtY5OnPrFbAf.jpg" 
-                    alt="Poster de O Auto da Compadecida">
-                <div class="status">
-                    <span class="badge badge-quero">Quero Assistir</span>
-                </div>
-                <h2>O Auto da Compadecida</h2>
-                <p>2000 - Comédia</p>
-                <p>
-                    Nota: ☆☆☆☆☆
-                </p>
-                
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments">
-                    Filme muito bom, apesar de eu não gostar da motivação para o ato final.
-                </p>
-            </article>
-
-            <article class="card">
-                <img src="https://acdn-us.mitiendanube.com/stores/004/687/740/products/pos-01063-d917e88e0b6456ced317181344553101-1024-1024.webp" 
-                    alt="Poster de Carros">
-                <div class="status">
-                    <span class="badge badge-assistido">Assistido</span>
-                </div>
-                <h2>Carros</h2>
-                <p>2010 - Animação</p>
-                <p>Nota: ★★★★★</p>
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments"> 
-                    Melhor filme para a infância/juventude. Mostra que devemos seguir
-                    nossos sonhos, não ser arrogantes e que nem sempre ganhar está relacionado com 
-                    vitória.
-                </p>
-            </article>
-
-            <article class="card">
-                <img src="https://acdn-us.mitiendanube.com/stores/004/687/740/products/pos-01448-dbf50c14e2a7dc11f217181324985634-1024-1024.webp" 
-                    alt="Poster de Batman: O Cavaleiro das Trevas">
-                <div class="status">
-                    <span class="badge badge-assistido">Assistido</span>
-                </div>
-                <h2>Batman: O Cavaleiro das Trevas</h2>
-                <p>2008 - Ação</p>
-                <p>Nota: ★★★★★</p>
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments"> 
-                    Super Herói foda. O melhor de todos. Coringa nesse filme está espetacular.
-                </p>
-            </article>
-
-            <article class="card">
-                <img src="https://acdn-us.mitiendanube.com/stores/004/687/740/products/pos-01905-cbadd09a80bee423cd17181255831057-1024-1024.webp" 
-                    alt="Poster de Joker">
-                <div class="status">
-                    <span class="badge badge-assistido">Assistido</span>
-                </div>
-                <h2>Joker</h2>
-                <p>2019 - Suspense Psicológico</p>
-                <p>Nota: ★★★★★</p>
-                <div class="edit-buttons">
-                    <a class="btn-editar" href="editar.html" >Editar</a>
-                    <button class="btn-remover">Remover</button>
-                </div>
-                <p class="comments"> 
-                    Melhor vilão do melhor herói. Você começa tendo dó e se apegando ao personagem. Mas
-                    com o tempo você percebe que ele se escora nos problemas pra matar e causar
-                    o caos e de história triste já basta
-                    a minha. Sendo assim, ele é maluco. Não assisti o segundo filme e não vou assistir, dizem que
-                    ficou ruim.
-                </p>
-            </article>
-        </section>
+        <div id="modal" hidden class="modal-overlay">
+            <div class="card-adicionar">
+                <form action="#" method="post" class="formulario" id="form-filme">
+                    <div class="title">
+                        <span class="material-symbols-outlined" id="camera_roll">camera_roll</span>
+                        <h2>Adicione ou edite!</h2>
+                    </div>
+                    
+                    <div class="campo campo-titulo">
+                        <label for="titulo">Título</label>
+                        <input id="titulo" name="titulo" type="text" placeholder="Digite o título" required>
+                    </div>
+                    
+                    <div class="campo campo-ano">
+                        <label for="ano">Ano</label>
+                        <input id="ano" name="ano" type="number" min="1888" max="2030" placeholder="Ex: 2024" required>
+                    </div>
+                    
+                    <div class="campo campo-genero">
+                        <label for="genero">Gênero</label>
+                        <select id="genero" name="genero" required>
+                            <option value="" disabled selected>Escolha um gênero</option>
+                            <option value="romance">Romance</option>
+                            <option value="ficcao">Ficção Científica</option>
+                            <option value="drama">Drama</option>
+                            <option value="comedia">Comédia</option>
+                            <option value="terror">Terror</option>
+                            <option value="animacao">Animação</option>
+                        </select>
+                    </div>
+                    
+                    <div class="campo campo-status">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" required>
+                            <option value="" disabled selected>Escolha um status</option>
+                            <option value="assistido">Assistido</option>
+                            <option value="assistindo">Assistindo</option>
+                            <option value="quero">Quero assistir</option>
+                        </select>
+                    </div>
+                    
+                    <fieldset class="campo campo-nota">
+                        <legend style="color: black;">Nota</legend>
+                        <label><input type="radio" name="nota" value="1" required> 1</label>
+                        <label><input type="radio" name="nota" value="2"> 2</label>
+                        <label><input type="radio" name="nota" value="3"> 3</label>
+                        <label><input type="radio" name="nota" value="4"> 4</label>
+                        <label><input type="radio" name="nota" value="5"> 5</label>
+                    </fieldset>
+                    
+                    <div class="campo campo-comentario">
+                        <label for="comentario">Comentário</label>
+                        <textarea id="comentario" name="comentario" rows="4" placeholder="Coloque um comentário"></textarea>
+                    </div>
+                    
+                    <div class="campo campo-url">
+                        <label for="url">URL do pôster</label>
+                        <input id="url" name="url" type="url" placeholder="Insira a URL da capa do filme">
+                    </div>
+                    
+                    <div class="campo campo-botoes">
+                        <button type="submit" id="bt-save">Salvar</button>
+                        <button type="button" id="bt-cancel" aria-label="Cancelar">
+                            <span class="material-symbols-outlined">cancel</span>
+                        </button>
+                    </div>
+                </form>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7iJ6Qd17DsTxC4YeI8_F6tO_ZGTSCqN1HVA2j8NbtUQ&s=10" alt="Poster de Filmes">
+            </div>
+        </div>
     </main>
 
     <footer>

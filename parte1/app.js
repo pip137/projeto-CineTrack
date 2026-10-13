@@ -12,6 +12,34 @@ function rotuloStatus(status) {
     if (status === "quero") return "Quero assistir";
     return status; 
 }
+
+const estrelas = (nota) => {
+    let resultado = "";
+    for (let i = 1; i <= 5; i++) {
+        resultado += i <= nota ? "★" : "☆";
+    }
+    return resultado;
+};
+
+function validarFilme(filme) {
+    const erros = [];
+    if (!filme.titulo || filme.titulo.trim() === "") erros.push("O título é obrigatório.");
+    if (filme.ano < 1888 || filme.ano > 2030) erros.push("Ano inválido (entre 1888 e 2030).");
+    if (!filme.nota) erros.push("A nota é obrigatória.");
+    return { valido: erros.length === 0, erros };
+}
+const gerarId = (lista) => 
+    Math.max(0, ...lista.map((f) => f.id)) + 1;
+
+function aplicarFiltros(lista, opcoes) {
+    const termo = opcoes.termo.toLowerCase();
+    return lista
+        .filter((f) => f.titulo.toLowerCase().includes(termo))
+        .filter((f) => opcoes.status === "todos" || f.status === opcoes.status);
+}
+
+const lista = document.querySelector("#lista");
+
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
@@ -55,58 +83,68 @@ function criarCard(f) {
     return card;
 }
 
+function renderizarCards(listaDeFilmes) {
+    const frag = document.createDocumentFragment();
+    listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
+    lista.replaceChildren(frag);
+}
+function atualizar() {
+    const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
+    renderizarCards(visiveis);
+}
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    divErros.textContent = "";
 
-function criaNotaSelecao(notaInicial = 0, aoMudar = () => {}){
-    const TOTAL = 5;
-    let notaAtual = notaInicial;
+    const dados = Object.fromEntries(new FormData(form));
+    dados.ano = Number(dados.ano);
+    dados.nota = Number(dados.nota);
 
-    const divNota = document.createElement("div");
-    const labelNota = document.createElement("p");
-    const estrelas = [];
-    
-
-
-    divNota.className = "area-nota";
-    divNota.style.display = "flex";
-    divNota.style.gap = "10px";
-    divNota.setAttribute("role","radiogroup");
-    divNota.classList.add("estrelas");
-
-    labelNota.className = "label";
-    labelNota.textContent ="Nota:";
-
-    nota.append(labelNota)
-
-    const pintar = (ate) => {
-        estrela.forEach((btn, i) => {
-            btn.textContent = i < ate ? "☆" : "★";
-            btn.classList.toggle("ativa", i < ate);
-            btn.setAttribute("aria-checked", i + 1 === notaAtual);
-        });
+    const { valido, erros } = validarFilme(dados);
+    if (!valido) {
+        divErros.innerHTML = erros.join("<br>");
+        return;
     }
 
-    for (let i = 1; i <= TOTAL; i++){
-        const estrela = document.createElement("button");
-        estrela.className = "estrela";
-        estrela.type = "button";
-        estrela.setAttribute("role", "radio");
+    const filmeProcessado = {
+        titulo: dados.titulo, ano: dados.ano, genero: dados.genero,
+        status: dados.status, nota: dados.nota, comentario: dados.comentario || "",
+        poster: dados.url || "https://placehold.co/200x300?text=Sem+Capa"
+    };
 
-        estrela.addEventListener("mouseenter", () => pintar(i))
-        estrela.addEventListener("focus", () => pintar(i))
-        estrela.addEventListener("mouseenter", () => {
-            notaAtual = notaAtual === 1 ? 0 : i;
-            pintar(notaAtual);
-            aoMudar(notaAtual);
-        })
-        estrelas.push(estrelas);
-        divNota.append(estrela);
+    if (editandoId !== null) {
+        filmes = filmes.map((f) => f.id === editandoId ? { ...f, ...filmeProcessado, id: editandoId } : f);
+    } else {
+        filmes = [...filmes, { ...filmeProcessado, id: gerarId(filmes) }];
     }
 
-    divNota.addEventListener("mouseleave", () => pintar(notaAtual));
-    divNota.addEventListener("focusout", () => pintar(notaAtual));
+    salvar();
+    form.reset();
+    fechar();
+    atualizar();
+});
 
-    pintar(notaAtual);
-    return divNota;
+lista.addEventListener("click", (e) => {
+    const btnRemover = e.target.closest(".btn-remover");
+    if (btnRemover) {
+        if (!confirm("Remover este filme?")) return;
+        const id = Number(btnRemover.closest(".card").dataset.id);
+        filmes = filmes.filter((f) => f.id !== id);
+        salvar();
+        atualizar();
+        return;
+    }
+
+    const btnEditar = e.target.closest(".btn-editar");
+    if (btnEditar) {
+        editandoId = Number(btnEditar.closest(".card").dataset.id);
+        const f = filmes.find((x) => x.id === editandoId);
+        form.elements.titulo.value = f.titulo; form.elements.ano.value = f.ano;
+        form.elements.genero.value = f.genero; form.elements.status.value = f.status;
+        form.elements.nota.value = f.nota; form.elements.comentario.value = f.comentario;
+        form.elements.url.value = f.poster;
+        divErros.textContent = "";
+        abrir();
 }
 });
 
