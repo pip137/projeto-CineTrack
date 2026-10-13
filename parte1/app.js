@@ -102,8 +102,7 @@ function atualizar() {
     renderizarCards(visiveis);
 }
 
-
-form.addEventListener("submit", (e) => {
+formModal.addEventListener("submit", (e) => {
     e.preventDefault();
     divErros.textContent = "";
 
@@ -205,12 +204,12 @@ function debounce(fn, ms = 300) {
     };
 }
 
-const busca = document.querySelector("header input[type='search']");
+//const busca = document.querySelector("header input[type='search']");
 const aoDigitar = (e) => {
     termoAtual = e.target.value;
     atualizar();
 };
-    busca.addEventListener("input", debounce(aoDigitar, 300));
+    inputBusca.addEventListener("input", debounce(aoDigitar, 300));
 
     const navFiltros = document.querySelector("nav");
     navFiltros.addEventListener("click", (e) => {
