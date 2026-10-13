@@ -37,6 +37,9 @@ function aplicarFiltros(lista, opcoes) {
         .filter((f) => f.titulo.toLowerCase().includes(termo))
         .filter((f) => opcoes.status === "todos" || f.status === opcoes.status);
 }
+
+const lista = document.querySelector("#lista");
+
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
