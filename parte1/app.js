@@ -12,6 +12,16 @@ function rotuloStatus(status) {
     if (status === "quero") return "Quero assistir";
     return status; 
 }
+
+const estrelas = (nota) => {
+    let resultado = "";
+    for (let i = 1; i <= 5; i++) {
+        resultado += i <= nota ? "★" : "☆";
+    }
+    return resultado;
+};
+
+function validarFilme(filme) {
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
