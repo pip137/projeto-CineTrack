@@ -22,6 +22,15 @@ const estrelas = (nota) => {
 };
 
 function validarFilme(filme) {
+    const erros = [];
+    if (!filme.titulo || filme.titulo.trim() === "") erros.push("O título é obrigatório.");
+    if (filme.ano < 1888 || filme.ano > 2030) erros.push("Ano inválido (entre 1888 e 2030).");
+    if (!filme.nota) erros.push("A nota é obrigatória.");
+    return { valido: erros.length === 0, erros };
+}
+const gerarId = (lista) => 
+    Math.max(0, ...lista.map((f) => f.id)) + 1;
+
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
