@@ -106,6 +106,8 @@ function atualizar() {
 }
 const modal = document.querySelector("#modal");
 const form = document.querySelector("#form-filme");
+const abrir = () => modal.hidden = false;
+const fechar = () => modal.hidden = true;
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     divErros.textContent = "";
