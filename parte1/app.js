@@ -108,6 +108,16 @@ const modal = document.querySelector("#modal");
 const form = document.querySelector("#form-filme");
 const abrir = () => modal.hidden = false;
 const fechar = () => modal.hidden = true;
+document.querySelector("#btn-adicionar").addEventListener("click", () => {
+    editandoId = null;
+    form.reset();
+    divErros.textContent = "";
+    abrir();
+});
+document.querySelector("#bt-cancel").addEventListener("click", fechar);
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) fechar();
+});
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     divErros.textContent = "";
