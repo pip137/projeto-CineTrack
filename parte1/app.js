@@ -119,6 +119,13 @@ document.querySelector("#bt-cancel").addEventListener("click", fechar);
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.hidden) fechar();
 });
+
+const divErros = document.createElement("div");
+divErros.style.color = "red";
+divErros.style.fontWeight = "bold";
+divErros.style.marginBottom = "10px";
+form.insertBefore(divErros, form.querySelector(".campo-titulo"));
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     divErros.textContent = "";
