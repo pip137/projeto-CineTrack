@@ -1,10 +1,10 @@
 const filmesIniciais = [
-    { id: 1, titulo: "A Origem", ano: 2010, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=A+Origem", nota: 5, status: "assistido", comentario: "Revejo sempre." },
-    { id: 2, titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://placehold.co/200x300?text=Parasita", nota: 4, status: "assistido", comentario: "" },
-    { id: 3, titulo: "O Auto da Compadecida", ano: 2000, genero: "Comédia", poster: "https://placehold.co/200x300?text=Compadecida", nota: 5, status: "assistido", comentario: "Classico nacional." },
-    { id: 4, titulo: "Duna: Parte Dois", ano: 2024, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Duna+2", nota: 4, status: "assistindo", comentario: "" },
-    { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar", nota: 5, status: "quero", comentario: "" },
-    { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4, status: "quero", comentario: "" }
+    { id: 1,    titulo: "A Origem",                ano: 2010,  genero: "Ficção científica", poster: "https://placehold.co/200x300?text=A+Origem",       nota: 5,   status: "Assistido",   comentario: "Revejo sempre." },
+    { id: 2,    titulo: "Parasita",                ano: 2019,  genero: "Suspense",          poster: "https://placehold.co/200x300?text=Parasita",       nota: 4,   status: "Assistido",   comentario: "" },
+    { id: 3,    titulo: "O Auto da Compadecida",   ano: 2000,  genero: "Comédia",           poster: "https://placehold.co/200x300?text=Compadecida",    nota: 5,   status: "Assistido",   comentario: "Classico nacional." },
+    { id: 4,    titulo: "Duna: Parte Dois",        ano: 2024,  genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Duna+2",         nota: 4,   status: "Assistindo",  comentario: "" },
+    { id: 5,    titulo: "Interestelar",            ano: 2014,  genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar",   nota: 5,   status: "Quero",       comentario: "" },
+    { id: 6,    titulo: "Cidade de Deus",          ano: 2002,  genero: "Drama",             poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4,   status: "uero",       comentario: "" }
 ];
 
 const CHAVE = "cinetrack:filmes";
@@ -56,6 +56,7 @@ function aplicarFiltros(lista, opcoes) {
 
 const lista = document.querySelector("#lista");
 
+
 function criarCard(f) {
     const card = document.createElement("article");
     card.className = "card";
@@ -83,12 +84,15 @@ function criarCard(f) {
 
     const divAcoes = document.createElement("div");
     divAcoes.className = "edit-buttons";
+
     const btnEditar = document.createElement("button");
     btnEditar.className = "btn-editar";
     btnEditar.textContent = "Editar";
+
     const btnRemover = document.createElement("button");
     btnRemover.className = "btn-remover";
     btnRemover.textContent = "Remover";
+
     divAcoes.append(btnEditar, btnRemover);
 
     const pComentario = document.createElement("p");
@@ -98,6 +102,7 @@ function criarCard(f) {
     card.append(img, divStatus, titulo, anoGenero, pNota, divAcoes, pComentario);
     return card;
 }
+
 
 function renderizarCards(listaDeFilmes) {
     const frag = document.createDocumentFragment();
@@ -190,6 +195,44 @@ lista.addEventListener("click", (e) => {
     }
 });
 
+// function renderizarCards( filmes) {
+//     const cards = filmes.map((f) => `
+//         <article class="card" data-id="${f.id}">
+//                 <img src="${f.poster}" 
+//                 alt="Poster de ${f.titulo}">
+//                 <div class="status">
+//                     <span class="badge badge-${f.status}">${f.status}</span>
+//                 </div>
+//                 <h2>${f.titulo}</h2>
+//                 <p>${f.ano} - ${f.genero}</p>
+//                 <p>
+//                     ${f.nota}
+//                 </p>
+                
+//                 <div class="edit-buttons">
+//                     <a class="btn-editar" href="editar.html" >Editar</a>
+//                     <button class="btn-remover">Remover</button>
+//                 </div>
+//                 <p class="comments"> ${f.comentario} </p>
+//             </article>
+//     `).join("");
+//     lista.innerHTML = cards;
+// }
+
+let termoAtual = "";
+let statusAtual = "todos";
+let filmes = [...filmesIniciais];
+
+function atualizar() {
+    const termo = termoAtual.trim().toLowerCase();
+    const filtrados = filmes.filter((f) =>
+        (statusAtual === "todos" || f.status === statusAtual) &&
+        f.titulo.toLowerCase().includes(termo)
+    );
+    renderizarCards(filtrados);
+}
+
+
 function debounce(fn, ms = 300) {
     let timer;
     return (...args) => {
@@ -198,23 +241,23 @@ function debounce(fn, ms = 300) {
     };
 }
 
-const busca = document.querySelector("header input[type='search']");
+//const busca = document.querySelector("header input[type='search']");
 const aoDigitar = (e) => {
     termoAtual = e.target.value;
     atualizar();
 };
-busca.addEventListener("input", debounce(aoDigitar, 300));
+    inputBusca.addEventListener("input", debounce(aoDigitar, 300));
 
-const navFiltros = document.querySelector("nav");
-navFiltros.addEventListener("click", (e) => {
-    const botao = e.target.closest("button");
-    if (!botao) return;
+    const navFiltros = document.querySelector("nav");
+    navFiltros.addEventListener("click", (e) => {
+        const botao = e.target.closest("button");
+        if (!botao) return;
 
-    navFiltros.querySelector(".ativo").classList.remove("ativo");
-    botao.classList.add("ativo");
-    
-    statusAtual = botao.dataset.status;
-    atualizar();
-});
+        navFiltros.querySelector(".ativo").classList.remove("ativo");
+        botao.classList.add("ativo");
+        
+        statusAtual = botao.dataset.status;
+        atualizar();
+    });
 
 atualizar();
