@@ -6,13 +6,16 @@ const filmesIniciais = [
     { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar", nota: 5, status: "quero", comentario: "" },
     { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4, status: "quero", comentario: "" }
 ];
+
 const CHAVE = "cinetrack:filmes";
 
 function carregar() {
     const txt = localStorage.getItem(CHAVE);
     return txt ? JSON.parse(txt) : [...filmesIniciais];
 }
+
 const salvar = () => localStorage.setItem(CHAVE, JSON.stringify(filmes));
+
 let filmes = carregar();
 
 let termoAtual = "";
@@ -40,6 +43,7 @@ function validarFilme(filme) {
     if (!filme.nota) erros.push("A nota é obrigatória.");
     return { valido: erros.length === 0, erros };
 }
+
 const gerarId = (lista) => 
     Math.max(0, ...lista.map((f) => f.id)) + 1;
 
@@ -100,15 +104,19 @@ function renderizarCards(listaDeFilmes) {
     listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
     lista.replaceChildren(frag);
 }
+
 function atualizar() {
     const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
     renderizarCards(visiveis);
 }
+
 const modal = document.querySelector("#modal");
 const form = document.querySelector("#form-filme");
 let editandoId = null;
+
 const abrir = () => modal.hidden = false;
 const fechar = () => modal.hidden = true;
+
 document.querySelector("#btn-adicionar").addEventListener("click", () => {
     editandoId = null;
     form.reset();
@@ -179,7 +187,7 @@ lista.addEventListener("click", (e) => {
         form.elements.url.value = f.poster;
         divErros.textContent = "";
         abrir();
-}
+    }
 });
 
 function debounce(fn, ms = 300) {
