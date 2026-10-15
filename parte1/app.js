@@ -12,6 +12,8 @@ function carregar() {
     const txt = localStorage.getItem(CHAVE);
     return txt ? JSON.parse(txt) : [...filmesIniciais];
 }
+const salvar = () => localStorage.setItem(CHAVE, JSON.stringify(filmes));
+
 function rotuloStatus(status) {
     if (status === "assistido") return "Assistido";
     if (status === "assistindo") return "Assistindo";
