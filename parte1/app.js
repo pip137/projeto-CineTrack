@@ -104,6 +104,8 @@ function atualizar() {
     const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
     renderizarCards(visiveis);
 }
+const modal = document.querySelector("#modal");
+const form = document.querySelector("#form-filme");
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     divErros.textContent = "";
