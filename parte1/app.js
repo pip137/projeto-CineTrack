@@ -106,6 +106,7 @@ function atualizar() {
 }
 const modal = document.querySelector("#modal");
 const form = document.querySelector("#form-filme");
+let editandoId = null;
 const abrir = () => modal.hidden = false;
 const fechar = () => modal.hidden = true;
 document.querySelector("#btn-adicionar").addEventListener("click", () => {
