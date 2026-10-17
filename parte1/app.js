@@ -1,194 +1,49 @@
-const filmesIniciais = [
-    { id: 1, titulo: "A Origem", ano: 2010, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=A+Origem", nota: 5, status: "assistido", comentario: "Revejo sempre." },
-    { id: 2, titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://placehold.co/200x300?text=Parasita", nota: 4, status: "assistido", comentario: "" },
-    { id: 3, titulo: "O Auto da Compadecida", ano: 2000, genero: "Comédia", poster: "https://placehold.co/200x300?text=Compadecida", nota: 5, status: "assistido", comentario: "Classico nacional." },
-    { id: 4, titulo: "Duna: Parte Dois", ano: 2024, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Duna+2", nota: 4, status: "assistindo", comentario: "" },
-    { id: 5, titulo: "Interestelar", ano: 2014, genero: "Ficção científica", poster: "https://placehold.co/200x300?text=Interestelar", nota: 5, status: "quero", comentario: "" },
-    { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://placehold.co/200x300?text=Cidade+de+Deus", nota: 4, status: "quero", comentario: "" }
-];
+const CHAVE_STORAGE = "cinetrack:filmes";
+const btnTema   = document.querySelector("#btn-tema");
+const iconeTema = document.querySelector("#icone-tema");
+const POSTER_PADRAO = "https://placehold.co/200x300?text=Sem+Capa";
+const ANO_MIN = 1888;
+const ANO_MAX = 2030;
 
-const CHAVE = "cinetrack:filmes";
-
-function carregar() {
-    const txt = localStorage.getItem(CHAVE);
-    return txt ? JSON.parse(txt) : [...filmesIniciais];
-}
-
-const salvar = () => localStorage.setItem(CHAVE, JSON.stringify(filmes));
-
-let filmes = carregar();
-
-let termoAtual = "";
-let statusAtual = "todos";
-
-function rotuloStatus(status) {
-    if (status === "assistido") return "Assistido";
-    if (status === "assistindo") return "Assistindo";
-    if (status === "quero") return "Quero assistir";
-    return status; 
-}
-
-const estrelas = (nota) => {
-    let resultado = "";
-    for (let i = 1; i <= 5; i++) {
-        resultado += i <= nota ? "★" : "☆";
-    }
-    return resultado;
+const GENEROS = {
+    romance:   "Romance",
+    ficcao:    "Ficção científica",
+    drama:     "Drama",
+    comedia:   "Comédia",
+    terror:    "Terror",
+    animacao:  "Animação",
+    suspense:  "Suspense",
 };
 
-function validarFilme(filme) {
-    const erros = [];
-    if (!filme.titulo || filme.titulo.trim() === "") erros.push("O título é obrigatório.");
-    if (filme.ano < 1888 || filme.ano > 2030) erros.push("Ano inválido (entre 1888 e 2030).");
-    if (!filme.nota) erros.push("A nota é obrigatória.");
-    return { valido: erros.length === 0, erros };
-}
+const STATUS = {
+    assistido:  "Assistido",
+    assistindo: "Assistindo",
+    quero:      "Quero assistir",
+};
 
-const gerarId = (lista) => 
-    Math.max(0, ...lista.map((f) => f.id)) + 1;
+const filmesIniciais = [
+    { id: 1, titulo: "A Origem",              ano: 2010, genero: "ficcao",   poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg",  nota: 5, status: "assistido",  comentario: "Revejo sempre." },
+    { id: 2, titulo: "Parasita",              ano: 2019, genero: "suspense", poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/bNGW8zYA91VqTZfV3jnKHPEKKvB.jpg",  nota: 4, status: "assistido",  comentario: "" },
+    { id: 3, titulo: "O Auto da Compadecida", ano: 2000, genero: "comedia",  poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/y3IhuITELtprMhUd7bccu629rba.jpg",  nota: 5, status: "assistido",  comentario: "Clássico nacional." },
+    { id: 4, titulo: "Duna: Parte Dois",      ano: 2024, genero: "ficcao",   poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/VMy4UGsI2u3f4fALGeCqCdsQBb.jpg",   nota: 4, status: "assistindo", comentario: "" },
+    { id: 5, titulo: "Interestelar",          ano: 2014, genero: "ficcao",   poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/tR1XVa5bxgdh2bRw2u0DzrgkO2l.jpg",  nota: 5, status: "quero",      comentario: "" },
+    { id: 6, titulo: "Cidade de Deus",        ano: 2002, genero: "drama",    poster: "https://media.themoviedb.org/t/p/w300_and_h450_face/gfnXixcGC060QcG6JPxN6AMdVsq.jpg",  nota: 4, status: "quero",      comentario: "" },
+];
 
-function aplicarFiltros(lista, opcoes) {
-    const termo = opcoes.termo.toLowerCase();
-    return lista
-        .filter((f) => f.titulo.toLowerCase().includes(termo))
-        .filter((f) => opcoes.status === "todos" || f.status === opcoes.status);
-}
-
-const lista = document.querySelector("#lista");
-
-function criarCard(f) {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.dataset.id = f.id;
-
-    const img = document.createElement("img");
-    img.src = f.poster || "https://placehold.co/200x300?text=Sem+Capa";
-    img.alt = `Poster de ${f.titulo}`;
-
-    const divStatus = document.createElement("div");
-    divStatus.className = "status";
-    const spanStatus = document.createElement("span");
-    spanStatus.className = `badge badge-${f.status}`; 
-    spanStatus.textContent = rotuloStatus(f.status);
-    divStatus.appendChild(spanStatus);
-
-    const titulo = document.createElement("h2");
-    titulo.textContent = f.titulo;
-    
-    const anoGenero = document.createElement("p");
-    anoGenero.textContent = `${f.ano} - ${f.genero}`;
-
-    const pNota = document.createElement("p");
-    pNota.textContent = `Nota: ${estrelas(f.nota)}`;
-
-    const divAcoes = document.createElement("div");
-    divAcoes.className = "edit-buttons";
-    const btnEditar = document.createElement("button");
-    btnEditar.className = "btn-editar";
-    btnEditar.textContent = "Editar";
-    const btnRemover = document.createElement("button");
-    btnRemover.className = "btn-remover";
-    btnRemover.textContent = "Remover";
-    divAcoes.append(btnEditar, btnRemover);
-
-    const pComentario = document.createElement("p");
-    pComentario.className = "comments";
-    if (f.comentario) pComentario.textContent = f.comentario;
-
-    card.append(img, divStatus, titulo, anoGenero, pNota, divAcoes, pComentario);
-    return card;
-}
-
-function renderizarCards(listaDeFilmes) {
-    const frag = document.createDocumentFragment();
-    listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
-    lista.replaceChildren(frag);
-}
-
-function atualizar() {
-    const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
-    renderizarCards(visiveis);
-}
-
-const modal = document.querySelector("#modal");
-const form = document.querySelector("#form-filme");
+let filmes = carregar();
+let termoAtual = "";
+let statusAtual = "todos";
 let editandoId = null;
 
-const abrir = () => modal.hidden = false;
-const fechar = () => modal.hidden = true;
-
-document.querySelector("#btn-adicionar").addEventListener("click", () => {
-    editandoId = null;
-    form.reset();
-    divErros.textContent = "";
-    abrir();
-});
-document.querySelector("#bt-cancel").addEventListener("click", fechar);
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.hidden) fechar();
-});
-
-const divErros = document.createElement("div");
-divErros.style.color = "red";
-divErros.style.fontWeight = "bold";
-divErros.style.marginBottom = "10px";
-form.insertBefore(divErros, form.querySelector(".campo-titulo"));
-
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    divErros.textContent = "";
-
-    const dados = Object.fromEntries(new FormData(form));
-    dados.ano = Number(dados.ano);
-    dados.nota = Number(dados.nota);
-
-    const { valido, erros } = validarFilme(dados);
-    if (!valido) {
-        divErros.innerHTML = erros.join("<br>");
-        return;
-    }
-
-    const filmeProcessado = {
-        titulo: dados.titulo, ano: dados.ano, genero: dados.genero,
-        status: dados.status, nota: dados.nota, comentario: dados.comentario || "",
-        poster: dados.url || "https://placehold.co/200x300?text=Sem+Capa"
-    };
-
-    if (editandoId !== null) {
-        filmes = filmes.map((f) => f.id === editandoId ? { ...f, ...filmeProcessado, id: editandoId } : f);
-    } else {
-        filmes = [...filmes, { ...filmeProcessado, id: gerarId(filmes) }];
-    }
-
-    salvar();
-    form.reset();
-    fechar();
-    atualizar();
-});
-
-lista.addEventListener("click", (e) => {
-    const btnRemover = e.target.closest(".btn-remover");
-    if (btnRemover) {
-        if (!confirm("Remover este filme?")) return;
-        const id = Number(btnRemover.closest(".card").dataset.id);
-        filmes = filmes.filter((f) => f.id !== id);
-        salvar();
-        atualizar();
-        return;
-    }
-
-    const btnEditar = e.target.closest(".btn-editar");
-    if (btnEditar) {
-        editandoId = Number(btnEditar.closest(".card").dataset.id);
-        const f = filmes.find((x) => x.id === editandoId);
-        form.elements.titulo.value = f.titulo; form.elements.ano.value = f.ano;
-        form.elements.genero.value = f.genero; form.elements.status.value = f.status;
-        form.elements.nota.value = f.nota; form.elements.comentario.value = f.comentario;
-        form.elements.url.value = f.poster;
-        divErros.textContent = "";
-        abrir();
-    }
-});
+const listaEl      = document.querySelector("#lista");
+const modalEl      = document.querySelector("#modal");
+const cardModal    = document.querySelector(".card-adicionar");
+const formEl       = document.querySelector("#form-filme");
+const buscaEl      = document.querySelector("header input[type='search']");
+const navFiltrosEl = document.querySelector("nav");
+const btnAdicionar = document.querySelector("#btn-adicionar");
+const btnCancelar  = document.querySelector("#bt-cancel");
+const errosEl = criarAreaDeErros();
 
 function debounce(fn, ms = 300) {
     let timer;
@@ -198,23 +53,298 @@ function debounce(fn, ms = 300) {
     };
 }
 
-const busca = document.querySelector("header input[type='search']");
-const aoDigitar = (e) => {
-    termoAtual = e.target.value;
-    atualizar();
-};
-busca.addEventListener("input", debounce(aoDigitar, 300));
+function estrelas(nota) {
+    return "★".repeat(nota) + "☆".repeat(5 - nota);
+}
 
-const navFiltros = document.querySelector("nav");
-navFiltros.addEventListener("click", (e) => {
+function rotuloStatus(status) {
+    return STATUS[status] ?? status;
+}
+
+function chaveGenero(valor) {
+    if (valor in GENEROS) return valor;
+    const normalizar = (s) => s.toLowerCase();
+    return Object.keys(GENEROS).find(
+        (k) => normalizar(GENEROS[k]) === normalizar(valor)
+    ) ?? "";
+}
+
+function rotuloGenero(valor) {
+    return GENEROS[chaveGenero(valor)] ?? valor;
+}
+
+function gerarId(lista) {
+    return Math.max(0, ...lista.map((f) => f.id)) + 1;
+}
+
+function criarElemento(tag, { classe, texto, atributos } = {}) {
+    const el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texto !== undefined) el.textContent = texto;
+    if (atributos) Object.entries(atributos).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+}
+
+function carregar() {
+    try {
+        const txt = localStorage.getItem(CHAVE_STORAGE);
+        return txt ? JSON.parse(txt) : [...filmesIniciais];
+    } catch {
+        return [...filmesIniciais];
+    }
+}
+
+function salvar() {
+    try {
+        localStorage.setItem(CHAVE_STORAGE, JSON.stringify(filmes));
+    } catch (erro) {
+        console.error("Não foi possível salvar os filmes:", erro);
+    }
+}
+
+function validarFilme(filme) {
+    const erros = [];
+
+    if (!filme.titulo || filme.titulo.trim() === "") {
+        erros.push("O título é obrigatório.");
+    }
+    if (!Number.isInteger(filme.ano) || filme.ano < ANO_MIN || filme.ano > ANO_MAX) {
+        erros.push(`Ano inválido (entre ${ANO_MIN} e ${ANO_MAX}).`);
+    }
+    if (!filme.nota) {
+        erros.push("A nota é obrigatória.");
+    }
+
+    return { valido: erros.length === 0, erros };
+}
+
+function aplicarFiltros(lista, { termo, status }) {
+    const busca = termo.trim().toLowerCase();
+    return lista
+        .filter((f) => f.titulo.toLowerCase().includes(busca))
+        .filter((f) => status === "todos" || f.status === status);
+}
+
+function adicionarFilme(dados) {
+    filmes = [...filmes, { ...dados, id: gerarId(filmes) }];
+}
+
+function editarFilme(id, dados) {
+    filmes = filmes.map((f) => (f.id === id ? { ...f, ...dados, id } : f));
+}
+
+function removerFilme(id) {
+    filmes = filmes.filter((f) => f.id !== id);
+}
+
+function formularioParaFilme(dados) {
+    return {
+        titulo:     dados.titulo.trim(),
+        ano:        dados.ano,
+        genero:     dados.genero,
+        status:     dados.status,
+        nota:       dados.nota,
+        comentario: dados.comentario?.trim() || "",
+        poster:     dados.url || POSTER_PADRAO,
+    };
+}
+
+function criarCard(f) {
+    const card = criarElemento("article", { classe: "card" });
+    card.dataset.id = f.id;
+
+    const img = criarElemento("img", {
+        atributos: { src: f.poster || POSTER_PADRAO, alt: `Poster de ${f.titulo}` },
+    });
+
+    const divStatus = criarElemento("div", { classe: "status" });
+    divStatus.append(
+        criarElemento("span", {
+            classe: `badge badge-${f.status}`,
+            texto: rotuloStatus(f.status),
+        })
+    );
+
+    const titulo    = criarElemento("h2", { texto: f.titulo });
+    const anoGenero = criarElemento("p",  { texto: `${f.ano} - ${rotuloGenero(f.genero)}` });
+    const pNota     = criarElemento("p",  { texto: `Nota: ${estrelas(f.nota)}` });
+
+    const divAcoes = criarElemento("div", { classe: "edit-buttons" });
+    divAcoes.append(
+        criarElemento("button", { classe: "btn-editar",  texto: "Editar",  atributos: { type: "button" } }),
+        criarElemento("button", { classe: "btn-remover", texto: "Remover", atributos: { type: "button" } })
+    );
+
+    const pComentario = criarElemento("p", { classe: "comments", texto: f.comentario || "" });
+
+    card.append(img, divStatus, titulo, anoGenero, pNota, divAcoes, pComentario);
+    return card;
+}
+
+function renderizarCards(listaDeFilmes) {
+    const frag = document.createDocumentFragment();
+    listaDeFilmes.forEach((f) => frag.appendChild(criarCard(f)));
+    listaEl.replaceChildren(frag);
+}
+
+function atualizar() {
+    const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
+    renderizarCards(visiveis);
+}
+
+function criarAreaDeErros() {
+    const div = criarElemento("div", { classe: "form-erros" });
+    div.setAttribute("role", "alert");
+    div.style.cssText = "color: red; font-weight: bold; margin-bottom: 10px;";
+    formEl.insertBefore(div, formEl.querySelector(".campo-titulo"));
+    return div;
+}
+
+function mostrarErros(erros) {
+    errosEl.replaceChildren(
+        ...erros.flatMap((msg, i) =>
+            i === 0 ? [document.createTextNode(msg)] : [document.createElement("br"), document.createTextNode(msg)]
+        )
+    );
+}
+
+function limparErros() {
+    errosEl.replaceChildren();
+}
+
+function abrirModal()  { modalEl.hidden = false; }
+function fecharModal() { modalEl.hidden = true; }
+
+function abrirParaAdicionar() {
+    editandoId = null;
+    formEl.reset();
+    limparErros();
+    modalEl.classList.remove("modo-edicao");
+    modalEl.querySelector("h2").textContent = "Adicione um filme!";
+    abrirModal();
+}
+
+function abrirParaEditar(id) {
+    const f = filmes.find((x) => x.id === id);
+    if (!f) return;
+
+    editandoId = id;
+    modalEl.classList.add("modo-edicao");
+    modalEl.querySelector("h2").textContent = "Altere seu card!";
+
+    const campos = formEl.elements;
+    campos.titulo.value     = f.titulo;
+    campos.ano.value        = f.ano;
+    campos.genero.value     = chaveGenero(f.genero);
+    campos.status.value     = f.status;
+    campos.nota.value       = f.nota;
+    campos.comentario.value = f.comentario;
+    campos.url.value        = f.poster === POSTER_PADRAO ? "" : f.poster;
+
+    limparErros();
+    abrirModal();
+}
+
+function aplicarTema(tema) {
+    const claro = tema === "claro";
+    document.documentElement.dataset.tema = tema;
+    iconeTema.textContent = claro ? "dark_mode" : "light_mode";
+    btnTema.setAttribute("aria-label", claro ? "Ativar modo escuro" : "Ativar modo claro");
+}
+
+function carregarTema() {
+    try {
+        return localStorage.getItem(CHAVE_TEMA) || "escuro";
+    } catch {
+        return "escuro";
+    }
+}
+
+function alternarTema() {
+    const novo = document.documentElement.dataset.tema === "claro" ? "escuro" : "claro";
+    aplicarTema(novo);
+    try {
+        localStorage.setItem(CHAVE_TEMA, novo);
+    } catch {}
+}
+
+btnAdicionar.addEventListener("click", abrirParaAdicionar);
+btnCancelar.addEventListener("click", fecharModal);
+btnTema.addEventListener("click", alternarTema);
+
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modalEl.hidden) fecharModal();
+});
+
+modalEl.addEventListener("click", (e) => {
+    if (e.target === modalEl) fecharModal();
+});
+
+formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    limparErros();
+
+    const dados = Object.fromEntries(new FormData(formEl));
+    dados.ano  = Number(dados.ano);
+    dados.nota = Number(dados.nota);
+
+    const { valido, erros } = validarFilme(dados);
+    if (!valido) {
+        mostrarErros(erros);
+        return;
+    }
+
+    const filme = formularioParaFilme(dados);
+
+    if (editandoId !== null) {
+        editarFilme(editandoId, filme);
+    } else {
+        adicionarFilme(filme);
+    }
+
+    salvar();
+    formEl.reset();
+    fecharModal();
+    atualizar();
+});
+
+listaEl.addEventListener("click", (e) => {
+    const card = e.target.closest(".card");
+    if (!card) return;
+    const id = Number(card.dataset.id);
+
+    if (e.target.closest(".btn-remover")) {
+        if (!confirm("Remover este filme?")) return;
+        removerFilme(id);
+        salvar();
+        atualizar();
+        return;
+    }
+
+    if (e.target.closest(".btn-editar")) {
+        abrirParaEditar(id);
+    }
+});
+
+buscaEl.addEventListener(
+    "input",
+    debounce((e) => {
+        termoAtual = e.target.value;
+        atualizar();
+    }, 300)
+);
+
+navFiltrosEl.addEventListener("click", (e) => {
     const botao = e.target.closest("button");
     if (!botao) return;
-
-    navFiltros.querySelector(".ativo").classList.remove("ativo");
-    botao.classList.add("ativo");
     
+    navFiltrosEl.querySelector(".ativo")?.classList.remove("ativo");
+    botao.classList.toggle("ativo");
+
     statusAtual = botao.dataset.status;
     atualizar();
 });
 
+aplicarTema(carregarTema());
 atualizar();

@@ -8,6 +8,8 @@
     --cor-texto: #FFFFFF;
     --cor-footer: #240046;
     --cor-texto-secundario: #8F9CAE;
+    --pagina-fundo: #312358;
+    --pagina-texto: #FFFFFF;
     --raio: 8px;
     --espaco: 16px;
 }
@@ -32,7 +34,9 @@ body {
     grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: repeat(3,auto);
     flex-flow: column wrap;
-
+    background: var(--pagina-fundo);
+    color: var(--pagina-texto);
+    transition: background 200ms ease, color 200ms ease;
 }
 
 img {
@@ -136,7 +140,6 @@ header input:hover{
 }
 
 
-
 header .btn {
     padding: 6px 14px;
     border: 1px solid var(--cor-texto-secundario);
@@ -191,7 +194,7 @@ nav button {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-nav button.ativo:hover {
+nav button.ativo {
     background: var(--cor-fundo);
     color: white;
 }
@@ -313,26 +316,6 @@ footer {
     margin-top: 40px;    /* Espaço acima do footer */
 }
 
-.filmes-exemplo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 24px;
-}
-
-
-table {
-    border: 1px solid #ccc;
-    border-radius: var(--raio);
-    padding: 12px 24px;
-}
-
-figure {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    padding: 12px 24px;
-}
 
 .section-information{
     display: flex;
@@ -377,7 +360,7 @@ figure {
     content: "";
     left: 0;
     top: -6px;
-    background-color: #fff
+    background-color: var(--pagina-texto);
 }
 
 .html,.css,.js{
@@ -481,7 +464,11 @@ figure {
 }
 
 .direitos a{
-    color: #fff;
+    color: var(--pagina-texto); 
+}
+
+.direitos::before { 
+    background-color: var(--pagina-texto); 
 }
 
 .direitos a:hover{
@@ -493,16 +480,15 @@ figure {
 .card-adicionar {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    box-sizing: content-box;
-    width: 100%;
-    max-width: 900px;
-    height: auto; 
-    min-height: 500px;
+    align-items: stretch;
+    box-sizing: border-box;
+    width: min(900px, 95vw);
     max-height: 90vh;
+    overflow: auto;
     position: relative;
     border-radius: 8px;
     border: 10px solid #fff;
+    background-color: #fff;
 }
 
 .card-adicionar::before{
@@ -525,31 +511,41 @@ figure {
     margin-top: auto;
 }
 
+.modal-overlay.modo-edicao .card-adicionar {
+    width: fit-content;
+}
+.modal-overlay.modo-edicao .card-adicionar img,
+.modal-overlay.modo-edicao #camera_roll {
+    display: none;
+}
+
+.modal-overlay.modo-edicao .formulario {
+    border-radius: 10px;
+}
+
 .formulario{
     display: grid;
-    /* grid-template-columns: 1fr 1fr; */
+    grid-template-columns: 1fr 1fr;      /* descomentado */
     grid-template-areas:
-    'title title' 
-    'titulo titulo'
-    'ano genero'
-    'status nota'
-    'comentario comentario'
-    'url url'
-    'botoes botoes';
-    /* grid-template-rows: repeat(auto-fit, fit-content); */
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0 24px;
-    background-color: #FFFFFF;
+        'title title'
+        'titulo titulo'
+        'ano genero'
+        'status nota'
+        'comentario comentario'
+        'url url'
+        'botoes botoes';
+    flex: 1 1 360px;
+    min-width: 0;                         /* permite encolher */
+    padding: 16px 24px;
+    gap: 8px;
+    background-color: #fff;
     border-radius: 0 10px 10px 0;
-    width: 500px;
-    height: 100%;
-    justify-content: center;
     align-content: center;
     z-index: 1;
-    column-gap: 8px;
-    row-gap: 8px;
 }
+
+.formulario .title { grid-area: title; }
+.formulario .campo { min-width: 0; }
 
 .campo-titulo { grid-area: titulo; display: flex; flex-direction: column; }
 .campo-ano { grid-area: ano; display: flex; flex-direction: column;}
@@ -560,26 +556,23 @@ figure {
 .campo-url { grid-area: url; display: flex; flex-direction: column; }
 .campo-botoes {grid-area: botoes; display: flex; flex-direction: row;}
 
-.formulario .title{
+.formulario .title {
+    grid-area: title;
     display: flex;
-    flex-direction: row;
-    grid-column: span 2;
     align-items: center;
     position: relative;
     margin-bottom: 20px;
-
+    padding: 0 36px 6px 0;
 }
 
-.formulario .title::after{
+.formulario .title::after {
     content: "";
-    flex: 1;
-    position:absolute;
-    left: -10px;
+    position: absolute;
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 100%;
     height: 2px;
-    background-color: var(--cor-footer);
-    margin-left: 10px;
+    background-color: var(--cor-cabecalho);
 }
 
 .formulario .title #camera_roll{
@@ -593,8 +586,16 @@ figure {
     color: var(--cor-cabecalho);
 }
 
+
 .formulario .campo label{
     color: var(--cor-fundo);
+    width: inherit;
+}
+
+.formulario .campo-nota {
+    min-width: 0;         
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .formulario .campo-nota label{
@@ -605,24 +606,34 @@ figure {
     /* margin-top: 10px; */
 }
 
-.formulario input{
-    color: var(--cor-fundo);
-    height: 30px;
-    padding: 10px;
+
+.formulario input:not([type="radio"]),
+.formulario select,
+.formulario textarea {
+    width: 100%;
+    height: 34px;
+    padding: 6px 10px;
     border-radius: 10px;
     border: 1px solid var(--cor-fundo);
-    outline: var(--cor-cabecalho);
+    color: var(--cor-fundo);
+    font: inherit;
 }
 
+.formulario textarea {
+    height: auto;
+    resize: vertical;
+}
 
-.formulario #ano,#genero,#status{
-    color: var(--cor-fundo);
-    height: 30px;
-    padding: 6px;
-    border-radius: 10px;
-    border: 1px solid var(--cor-fundo);
-    outline: var(--cor-cabecalho);
-    width: 200px;
+.formulario .campo-nota label {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    margin-left: 0;
+}
+
+.formulario .campo-botoes #bt-save {
+    width: 100%;
+    max-width: 200px;
 }
 
 
@@ -643,29 +654,100 @@ figure {
 .formulario #bt-cancel{
     width: fit-content;
     height: fit-content;
+    background-color: #fff;
     display:flex;
     padding: 4px;
     border-radius: 100px ;
+    border: none;
     justify-content: center;
     align-items: center;
-    border: none;
     position: absolute;
-    left: 95%;
-    top: 2%;
+    color: var(--cor-cabecalho);
+    top: 8px;
+    right: 8px;
+    left: auto;
 }
 
 .formulario #bt-cancel:hover{
     background-color: #ff6a6a;
-    color: #943535;
+    color: #fff;
 }
 
 .card-adicionar img {
-    justify-content: flex-end;
-    position: absolute;
+    height: auto;
+    align-self: stretch;
+    object-fit: cover;
+    min-width: 0;
     border-radius: inherit;
-    right: 0;
-    z-index: 0;
-    height: inherit;
+}
+
+.badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .badge-assistido {
+        background-color: #2e7d32;
+    }
+
+    .badge-assistindo {
+        background-color: #f57c00;
+    }
+
+    .badge-quero {
+        background-color: #0277bd;
+    }
+
+    .edit-buttons .btn {
+        padding: 4px 12px;
+        background: #e0e0e0;
+        color: var(--cor-fundo);
+        border: none;
+        border-radius: 4px;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-overlay[hidden] {
+        display: none !important;
+    }
+
+:root[data-tema="claro"] {
+    --pagina-fundo: #f4f0fa;
+    --pagina-texto: #230338;
+    --cor-footer: #7b2cbf;
+}
+
+:root[data-tema="claro"] footer {
+    --pagina-texto: #ffffff;
+    color: #ffffff;
+}
+
+
+#btn-tema {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+#btn-tema .material-symbols-outlined {
+    font-size: 20px;
 }
 
 @media (max-width: 700px) {
@@ -682,55 +764,35 @@ figure {
         border-radius: 0 0 10px 10px;
         width: 100%;
     }
-}
 
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: white;
-}
+    .modal-overlay .card-adicionar img{
+        display: none;
+    }
+    
+    .modal-overlay .formulario {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                'title'
+                'titulo'
+                'ano'
+                'genero'
+                'status'
+                'nota'
+                'comentario'
+                'url'
+                'botoes';
+            border-radius: 8px;
+            padding: 16px;
+        }
 
-.badge-assistido {
-    background-color: #2e7d32;
-}
+    .modal-overlay .card-adicionar {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transform: scale(0.95);
+        overflow: auto;
+        width: 95vw;
+    }
 
-.badge-assistindo {
-    background-color: #f57c00;
-}
-
-.badge-quero {
-    background-color: #0277bd;
-}
-
-.edit-buttons .btn {
-    padding: 4px 12px;
-    background: #e0e0e0;
-    color: var(--cor-fundo);
-    border: none;
-    border-radius: 4px;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-overlay[hidden] {
-    display: none !important;
-}
-
-.modal-overlay .card-adicionar {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transform: scale(0.95);
+    .modal-overlay.modo-edicao .card-adicionar {
+        width: fit-content;
+    }
 }

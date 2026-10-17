@@ -19,10 +19,13 @@
             <input type="search" aria-label="Buscar filme" placeholder="Busque um filme">
         </div>
         <button class="btn" id="btn-adicionar">+ Adicionar</button>
+        <button class="btn" id="btn-tema" type="button" aria-label="Ativar modo claro">
+            <span class="material-symbols-outlined" id="icone-tema">light_mode</span>
+        </button>
     </header>
 
     <nav aria-label="Filtros de status">
-        <button class="ativo" data-status="todos">Todos</button>
+        <button data-status="todos">Todos</button>
         <button data-status="assistido">Assistido</button>
         <button data-status="assistindo">Assistindo</button>
         <button data-status="quero">Quero assistir</button>
@@ -36,7 +39,7 @@
                 <form action="#" method="post" class="formulario" id="form-filme">
                     <div class="title">
                         <span class="material-symbols-outlined" id="camera_roll">camera_roll</span>
-                        <h2>Adicione ou edite!</h2>
+                        <h2>Adicione um filme!</h2>
                     </div>
                     
                     <div class="campo campo-titulo">
@@ -101,6 +104,7 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7iJ6Qd17DsTxC4YeI8_F6tO_ZGTSCqN1HVA2j8NbtUQ&s=10" alt="Poster de Filmes">
             </div>
         </div>
+
     </main>
 
     <footer>
