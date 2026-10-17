@@ -1,0 +1,325 @@
+:root {
+    --painel: rgba(255, 255, 255, 0.08);
+    --painel-borda: rgba(255, 255, 255, 0.18);
+    --destaque: #c77dff;
+}
+
+:root[data-tema="claro"] {
+    --painel: rgba(35, 3, 56, 0.06);
+    --painel-borda: rgba(35, 3, 56, 0.18);
+    --destaque: #7b2cbf;
+}
+
+header .logo h1 {
+    font-size: clamp(1.6rem, 1rem + 2.5vw, 2.8rem);
+}
+
+header .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+header .btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+main.sobre {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    padding: 40px 24px 0;
+}
+
+.sobre section > h2,
+.sobre .hero h2 {
+    width: auto;
+}
+
+.sobre section > h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-bottom: 6px;
+    font-size: 1.6rem;
+}
+
+.sobre section > h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--cor-cabecalho);
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero .selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    border: 1px solid var(--painel-borda);
+    border-radius: 999px;
+    background: var(--painel);
+    font-size: 0.85rem;
+}
+
+.hero h2 {
+    font-size: clamp(1.9rem, 1.2rem + 3vw, 3rem);
+    line-height: 1.15;
+}
+
+.hero h2 span {
+    color: var(--destaque);
+}
+
+.hero p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+.grade-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--espaco);
+}
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border: 1px solid var(--painel-borda);
+    border-radius: var(--raio);
+    background: var(--painel);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.info-card .material-symbols-outlined {
+    width: fit-content;
+    padding: 8px;
+    border-radius: 10px;
+    background: var(--cor-cabecalho);
+    color: #fff;
+}
+
+.info-card h3 {
+    font-size: 1.1rem;
+}
+
+.info-card p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.tabela-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--painel-borda);
+    border-radius: var(--raio);
+}
+
+.tabela-wrap table {
+    width: 100%;
+    min-width: 520px;
+    padding: 0;
+    border: 0;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabela-wrap th {
+    padding: 12px 16px;
+    background: var(--cor-cabecalho);
+    color: #fff;
+    font-weight: 700;
+}
+
+.tabela-wrap td {
+    padding: 12px 16px;
+    border-top: 1px solid var(--painel-borda);
+}
+
+.tabela-wrap tbody tr:nth-child(even) {
+    background: var(--painel);
+}
+
+.tabela-wrap tbody tr:hover {
+    background: var(--painel-borda);
+}
+
+.tabela-wrap code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--painel);
+    font-size: 0.9em;
+}
+
+.interface figure {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.interface img {
+    width: 100%;
+    border: 1px solid var(--painel-borda);
+    border-radius: var(--raio);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.interface figcaption {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.sobre details {
+    border: 1px solid var(--painel-borda);
+    border-radius: var(--raio);
+    background: var(--painel);
+}
+
+.sobre summary {
+    padding: 14px 18px;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sobre summary::-webkit-details-marker {
+    display: none;
+}
+
+.sobre summary::after {
+    content: "expand_more";
+    font-family: "Material Symbols Outlined";
+    font-size: 24px;
+    transition: transform 200ms ease;
+}
+
+.sobre details[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.sobre summary:focus-visible {
+    outline: 3px solid #4A90E2;
+    outline-offset: 2px;
+    border-radius: var(--raio);
+}
+
+.sobre details .tabela-wrap {
+    margin: 0 18px 18px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 6px 8px;
+    border: 1px solid var(--painel-borda);
+    border-radius: 999px;
+    background: var(--painel);
+    font-size: 0.95rem;
+}
+
+.chip .material-symbols-outlined {
+    padding: 2px 6px;
+    border-radius: 999px;
+    color: #fff;
+}
+
+.chip-html .material-symbols-outlined { background: #bd1e1e; }
+.chip-css .material-symbols-outlined  { background: #124e78; color: #a2d6f9; }
+.chip-js .material-symbols-outlined   { background: #f2bb05; color: #000; }
+
+.equipe {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--espaco);
+}
+
+.autor-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid var(--painel-borda);
+    border-radius: var(--raio);
+    background: var(--painel);
+}
+
+.autor-card .material-symbols-outlined {
+    padding: 8px;
+    border-radius: 50%;
+    background: var(--cor-cabecalho);
+    color: #fff;
+}
+
+.autor-card p {
+    width: auto;
+    font-weight: 700;
+}
+
+.autor-card small {
+    width: auto;
+    opacity: 0.8;
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 24px;
+    padding: 24px;
+    color: #fff;
+    text-align: center;
+}
+
+footer a {
+    color: #fff;
+}
+
+footer a:hover {
+    color: #00b4d8;
+}
+
+footer small {
+    width: auto;
+}
+
+@media (max-width: 700px) {
+    main.sobre {
+        gap: 40px;
+        padding: 28px 16px 0;
+    }
+}
