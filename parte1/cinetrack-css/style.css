@@ -313,7 +313,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 40px;    /* Espaço acima do footer */
+    margin-top: 40px;    
 }
 
 
@@ -525,7 +525,7 @@ footer {
 
 .formulario{
     display: grid;
-    grid-template-columns: 1fr 1fr;      /* descomentado */
+    grid-template-columns: 1fr 1fr;      
     grid-template-areas:
         'title title'
         'titulo titulo'
@@ -535,7 +535,7 @@ footer {
         'url url'
         'botoes botoes';
     flex: 1 1 360px;
-    min-width: 0;                         /* permite encolher */
+    min-width: 0;                        
     padding: 16px 24px;
     gap: 8px;
     background-color: #fff;

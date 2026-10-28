@@ -333,7 +333,7 @@ buscaEl.addEventListener(
         termoAtual = e.target.value;
         atualizar();
     }, 300)
-);
+);cd
 
 navFiltrosEl.addEventListener("click", (e) => {
     const botao = e.target.closest("button");
