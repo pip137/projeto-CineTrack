@@ -1,4 +1,4 @@
-import CardFilme from "./CardFilme.jsx";
+import CardFilme from "./CardFilmes.jsx";
 
 export default function ListaFilmes({ filmes, aoEditar, aoRemover }) {
     if (filmes.length === 0) {

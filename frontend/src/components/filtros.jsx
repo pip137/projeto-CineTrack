@@ -5,7 +5,7 @@ const STATUS = [
     { valor: "quero", rotulo: "Quero assistir" }
 ];
 
-export default function Filtro() {
+export default function Filtro({ ativo, aoMudar }) {
     return (
         <nav aria-label="Filtros de status">
             {STATUS.map((s) => (
