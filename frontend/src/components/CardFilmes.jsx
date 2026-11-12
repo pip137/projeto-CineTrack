@@ -1,3 +1,7 @@
+"use client"
+
+import * as motion from "motion/react-client"
+
 function estrelas(nota) {
     let resultado = "";
     for (let i = 1; i <= 5; i++) {
@@ -16,7 +20,13 @@ export default function CardFilme({ filme, aoEditar, aoRemover }) {
     const imagemCapa = filme.poster || "https://placehold.co/200x300?text=Sem+Capa";
 
     return (
-        <article className="card">
+        <motion.div 
+            className="card"
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            >
             <img src={imagemCapa} alt={`Poster de ${filme.titulo}`} />
             
             <div className="status">
@@ -51,6 +61,6 @@ export default function CardFilme({ filme, aoEditar, aoRemover }) {
             {filme.comentario && (
                 <p className="comments">{filme.comentario}</p>
             )}
-        </article>
+        </motion.div>
     );
 }

@@ -10,13 +10,12 @@ export default function App() {
     const [filmes, setFilmes] = useState(filmesIniciais);
     const [busca, setBusca] = useState("");
     const [status, setStatus] = useState("todos");
-    
     const [editando, setEditando] = useState(null);       
 
     const visiveis = filmes
         .filter((f) => status === "todos" || f.status === status)
         .filter((f) => f.titulo.toLowerCase().includes(busca.toLowerCase()));
-  
+
         function adicionar(novoFilme) {
         setFilmes((anteriores) => [
             ...anteriores,

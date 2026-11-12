@@ -1,3 +1,7 @@
+"use client"
+
+import { AnimatePresence } from "motion/react"
+
 import CardFilme from "./CardFilmes.jsx";
 
 export default function ListaFilmes({ filmes, aoEditar, aoRemover }) {
@@ -6,7 +10,7 @@ export default function ListaFilmes({ filmes, aoEditar, aoRemover }) {
     }
 
     return (
-        <section id="lista" aria-live="polite">
+        <AnimatePresence id="lista" aria-live="polite">
             {filmes.map((f) => (
                 <CardFilme 
                     key={f.id} 
@@ -15,6 +19,6 @@ export default function ListaFilmes({ filmes, aoEditar, aoRemover }) {
                     aoRemover={aoRemover} 
                 />
             ))}
-        </section>
+        </AnimatePresence>
     );
 }
