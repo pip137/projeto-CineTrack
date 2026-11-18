@@ -7,7 +7,8 @@ import {
     TbBrandJavascript,
     TbArrowRight,
 } from "react-icons/tb";
-import "./Footer.css";
+import logoUem from "../assets/uem-modelo-02.svg";
+
 
 const AUTORES = [
     { nome: "Henrique M. Neves da Silva", ra: "ra134557", iniciais: "HN" },
@@ -40,7 +41,9 @@ export default function Footer({ hrefSobre = "/sobre" }) {
                 <span>CEP 87020-900 - Maringá - PR</span>
             </address>
             {/* Troque pelo logo real: <img src="/uem-logo.png" alt="UEM" /> */}
-            <span className="footer-selo">UEM</span>
+            <span className="footer-selo" src="">
+                <img src={logoUem} alt="logo-uem" />
+            </span>
             </div>
         </div>
 
