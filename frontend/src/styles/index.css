@@ -126,7 +126,6 @@ header {
     font-size: 45px;
 }
 
-
 .search{
     display: flex;
     width: 40%;
@@ -142,6 +141,7 @@ header {
     font-size: 20px;
     color: var(--cor-texto-secundario);
 }
+
 .search:focus-within{
     outline: 1px solid #ffffff;
     outline-offset: 2px;
@@ -521,6 +521,7 @@ footer {
 .direitos a:hover{
     color: #00b4d8;
 }
+
 
 /* nova parte do adicionar.html, fomulario mais estruturizado */
 

@@ -5,6 +5,7 @@ import Header from "./components/header.jsx";
 import Filtros from "./components/filtros.jsx";
 import ListaFilmes from "./components/ListaFilmes.jsx";
 import ModalFilme from "./components/modal.jsx";
+import Footer from "./components/footer.jsx";
 
 export default function App() {
     const [filmes, setFilmes] = useState(filmesIniciais);
@@ -70,6 +71,7 @@ export default function App() {
                     aoFechar={() => setEditando(null)} 
                 />
             )}
+        <Footer/>
         </>
     );
 }
