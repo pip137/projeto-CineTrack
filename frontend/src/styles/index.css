@@ -561,13 +561,18 @@ nav button.ativo {
 }
 
 .footer-selo {
-    padding: 8px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* padding: 8px 14px; */
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
     border-radius: 10px;
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 1px;
     color: #fff;
+}
+
+.footer-selo img{
+    height: 70px;
+    width: auto;
 }
 
 .footer-cartoes {
@@ -653,9 +658,10 @@ nav button.ativo {
     font-size: 13px;
 }
 
-.chip-html { background: rgba(251, 146, 60, 0.16); color: #fdba74; }
+.chip-react  { background: #20232a; color: #61dafb; }
+.chip-motion { background: oklch(.76 .15 155); color: #000; }
 .chip-css  { background: rgba(96, 165, 250, 0.16); color: #93c5fd; }
-.chip-js   { background: rgba(250, 204, 21, 0.16); color: #fde047; }
+
 
 .footer-nota {
     margin-top: 12px;

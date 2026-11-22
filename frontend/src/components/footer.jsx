@@ -2,12 +2,14 @@ import {
     TbMovie,
     TbUsers,
     TbCode,
-    TbBrandHtml5,
+    TbBrandReact,
     TbBrandCss3,
-    TbBrandJavascript,
+    TbBrandFramerMotion,
     TbArrowRight,
 } from "react-icons/tb";
-import logoUem from "../assets/uem-modelo-02.svg";
+import logoUem from "../assets/logo-uem.svg";
+import ModalSobre from "./ModalSobre";
+import { useState } from "react";
 
 
 const AUTORES = [
@@ -16,12 +18,14 @@ const AUTORES = [
 ];
 
 const TECNOLOGIAS = [
-    { nome: "HTML", Icone: TbBrandHtml5, classe: "chip-html" },
+    { nome: "React", Icone: TbBrandReact, classe: "chip-react" },
     { nome: "CSS", Icone: TbBrandCss3, classe: "chip-css" },
-    { nome: "JavaScript", Icone: TbBrandJavascript, classe: "chip-js" },
+    { nome: "Motion.dev", Icone: TbBrandFramerMotion, classe: "chip-motion" },
 ];
 
 export default function Footer({ hrefSobre = "/sobre" }) {
+    const [sobreAberto, setSobreAberto] = useState(false);
+
     return (
         <footer className="footer">
         <div className="footer-topo">
@@ -92,10 +96,18 @@ export default function Footer({ hrefSobre = "/sobre" }) {
 
         <div className="footer-base">
             <span>CineTrack - UEM | Direitos © 2026</span>
-            <a className="footer-link" href={hrefSobre}>
+            <a className="footer-link" 
+            href={hrefSobre}
+            onClick={(e) => {
+            e.preventDefault();
+            setSobreAberto(true);
+            }}>
             Sobre o CineTrack
             <TbArrowRight size={14} aria-hidden="true" />
             </a>
+            <ModalSobre aberto={sobreAberto}
+            aoFechar={() => setSobreAberto(false)} 
+            hrefCompleto={hrefSobre}/>
         </div>
         </footer>
     );
