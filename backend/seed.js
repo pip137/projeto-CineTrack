@@ -16,4 +16,4 @@ fs.mkdirSync(path.dirname(ARQUIVO), {recursive: true});
 fs.writeFileSync(ARQUIVO, JSON.stringify(filmes, null, 2));
 
 console.log(`${filmes.length} filmes gravados`);
-console.log(`${filmes.map((e)=>JSON.stringify(e,null,2))}`)
+console.log(`${filmes.map((e)=>[JSON.stringify(e,null,2)])}`)
