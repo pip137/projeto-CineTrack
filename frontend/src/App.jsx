@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { filmesIniciais, gerarId } from "./data/filmes.js";
 
 import Header from "./components/header.jsx";
@@ -6,12 +6,35 @@ import Filtros from "./components/filtros.jsx";
 import ListaFilmes from "./components/ListaFilmes.jsx";
 import ModalFilme from "./components/modal.jsx";
 import Footer from "./components/footer.jsx";
+import { listar, criar, atualizar, remover } from "./api";
 
 export default function App() {
     const [filmes, setFilmes] = useState(filmesIniciais);
     const [busca, setBusca] = useState("");
     const [status, setStatus] = useState("todos");
-    const [editando, setEditando] = useState(null);       
+    const [editando, setEditando] = useState(null);
+
+    useEffect(() => {
+    listar()
+        .then(setFilmes)
+        .catch(() => setErro(true))
+        .finally(() => setCarregando(false));
+    }, []);
+
+    async function salvar(filme) {
+        if (filme.id) {
+            const at = await atualizar(filme.id, filme);
+            setFilmes((fs) => fs.map((f) => (f.id === at.id ? at : f)));
+        } else {
+            const novo = await criar(filme);
+            setFilmes((fs) => [...fs, novo]);
+        }
+    }
+
+    async function removerFilme(id) {
+        await remover(id);
+        setFilmes((fs) => fs.filter((f) => f.id !== id));
+    }
 
     const visiveis = filmes
         .filter((f) => status === "todos" || f.status === status)
@@ -30,9 +53,6 @@ export default function App() {
         );
     }
 
-    function remover(id) {
-        setFilmes((anteriores) => anteriores.filter((f) => f.id !== id));
-    }
 
     function salvar(dados) {
         if (editando && editando.id) {
@@ -60,7 +80,7 @@ export default function App() {
                 <ListaFilmes 
                     filmes={visiveis} 
                     aoEditar={setEditando}
-                    aoRemover={remover} 
+                    aoRemover={removerFilme} 
                 />
             </main>
 

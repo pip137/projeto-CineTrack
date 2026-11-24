@@ -661,6 +661,8 @@ nav button.ativo {
 .chip-react  { background: #20232a; color: #61dafb; }
 .chip-motion { background: oklch(.76 .15 155); color: #000; }
 .chip-css  { background: rgba(96, 165, 250, 0.16); color: #93c5fd; }
+.footer-chip.chip-node    { background: #3c873a; color: #fff; }
+.footer-chip.chip-express { background: #222;    color: #fff; }
 
 
 .footer-nota {

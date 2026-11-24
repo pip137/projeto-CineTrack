@@ -5,8 +5,11 @@ import {
     TbBrandReact,
     TbBrandCss3,
     TbBrandFramerMotion,
+    TbBrandNodejs,
     TbArrowRight,
 } from "react-icons/tb";
+import { SiExpress } from "react-icons/si";
+
 import logoUem from "../assets/logo-uem.svg";
 import ModalSobre from "./ModalSobre";
 import { useState } from "react";
@@ -21,6 +24,8 @@ const TECNOLOGIAS = [
     { nome: "React", Icone: TbBrandReact, classe: "chip-react" },
     { nome: "CSS", Icone: TbBrandCss3, classe: "chip-css" },
     { nome: "Motion.dev", Icone: TbBrandFramerMotion, classe: "chip-motion" },
+    { nome: "Node.js", Icone: TbBrandNodejs, classe: "chip-node" },
+    { nome: "Express", Icone: SiExpress, classe: "chip-express" }
 ];
 
 export default function Footer({ hrefSobre = "/sobre" }) {

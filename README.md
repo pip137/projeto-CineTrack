@@ -1,120 +1,208 @@
-<div align="center">
+# CineTrack
 
-# 🎬 CineTrack
+Gerenciador pessoal de filmes: cadastre, edite, filtre, busque e avalie os filmes que você já viu, está vendo ou quer ver.
 
-**Seu gerenciador pessoal de filmes.**
-Organize sua lista, filtre por status e dê nota para o que você assistiu.
+Projeto da disciplina **Programação de Sistemas Web**, Universidade Estadual de Maringá (UEM).
 
-![HTML5](https://img.shields.io/badge/HTML5-bd1e1e?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-124e78?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-f2bb05?style=for-the-badge&logo=javascript&logoColor=black)
-![Sem dependências](https://img.shields.io/badge/depend%C3%AAncias-zero-a100f2?style=for-the-badge)
+## Funcionalidades
 
-</div>
+- Cadastrar, editar e remover filmes (título, ano, gênero, nota, status, comentário e pôster)
+- Filtrar a lista por status: assistido, assistindo ou quero assistir
+- Buscar pelo título (a lista filtra enquanto você digita)
+- Avaliar com notas de 1 a 5 estrelas
+- Tema claro e escuro
+- Dados gravados no servidor, em um arquivo JSON
 
----
+## Tecnologias
 
-##  Sobre o projeto
+| Camada | Tecnologias |
+| --- | --- |
+| Frontend | React (Vite), CSS, Motion, React Icons |
+| Backend | Node.js, Express, CORS, Morgan |
+| Dados | Arquivo JSON (`backend/data/filmes.json`) |
 
-O **CineTrack** foi desenvolvido como trabalho da disciplina de **Programação de Sistemas Web** da **UEM** (Universidade Estadual de Maringá).
-
-É uma aplicação 100% front-end, sem backend e sem bibliotecas externas: tudo roda no navegador e seus filmes ficam salvos no próprio dispositivo.
-
-<!-- 📸 Dica: adicione um print da tela aqui
-![Preview do CineTrack](./docs/preview.png)
--->
-
-##  Funcionalidades
-
-| | Recurso | Detalhes |
-|---|---|---|
-| ➕ | **Adicionar filmes** | Título, ano, gênero, status, nota, comentário e URL do pôster |
-| ✏️ | **Editar** | Reabre o formulário já preenchido com os dados do filme |
-| 🗑️ | **Remover** | Com confirmação antes de apagar |
-| 🔎 | **Busca em tempo real** | Filtra pelo título, com *debounce* de 300 ms |
-| 🏷️ | **Filtro por status** | Todos · Assistido · Assistindo · Quero assistir |
-| ⭐ | **Notas de 1 a 5** | Exibidas como estrelas nos cards |
-| 💾 | **Persistência** | Tudo salvo no `localStorage` |
-| ✅ | **Validação** | Título obrigatório, ano entre 1888 e 2030 e nota obrigatória |
-| 📱 | **Responsivo** | Grid de cards adaptável e modal otimizado para celular |
-| ⌨️ | **Acessível** | `aria-label`, `aria-live`, foco visível e fechar o modal com `Esc` |
-
-## 🛠️ Tecnologias
-
-- **HTML5**: estrutura semântica das páginas
-- **CSS3**: Grid, Flexbox, variáveis CSS, `clamp()` e *media queries*
-- **JavaScript (ES6+)**: manipulação do DOM, `FormData`, `localStorage`, delegação de eventos e *debounce*
-- **Google Fonts**: Raleway
-- **Material Symbols**: ícones
-
-##  Estrutura
+## Arquitetura
 
 ```
-cinetrack/
-├── index.html              # Página principal (lista, filtros e modal)
-├── app.js                  # Toda a lógica da aplicação
-├── cinetrack-css/
-│   └── style.css           # Estilos e responsividade
-├── cinetrack-img/
-│   └── uem-modelo-02.svg   # Logo da UEM
-└── cinetrack-html/
-    └── sobre.html          # Página "Sobre o CineTrack"
+Navegador (React, :5173)  <-- HTTP/JSON -->  API (Node + Express, :3000)  <-- fs -->  data/filmes.json
 ```
 
-## ▶ Como rodar
+O frontend consome a API via `fetch`. O backend lê e grava os filmes em um arquivo JSON.
 
-Não precisa instalar nada.
+## Estrutura do repositório
+
+```
+.
+├── frontend/              # Aplicação React (Vite)
+│   └── src/
+│       ├── api.js         # Chamadas fetch para a API
+│       ├── App.jsx
+│       └── components/
+├── backend/               # API Node + Express
+│   ├── server.js          # Servidor e rotas
+│   ├── seed.js            # Gera o banco inicial (data/filmes.json)
+│   ├── package.json
+│   ├── .env.example       # Modelo das variáveis de ambiente
+│   └── data/              # Criada pelo seed
+└── README.md
+```
+
+## Pré-requisitos
+
+- [Node.js](https://nodejs.org/) 20.6 ou superior (os scripts usam `--env-file` e `--watch`)
+- npm (já vem com o Node.js)
+
+Para conferir a versão instalada:
 
 ```bash
-# 1. Clone o repositório
-git clone <url-do-repositorio>
-
-# 2. Entre na pasta
-cd cinetrack
-
-# 3. Abra o index.html no navegador
+node --version
 ```
 
-Ou, se preferir um servidor local:
+## Como rodar o backend
+
+Todos os comandos são executados dentro da pasta `backend/`.
 
 ```bash
-npx serve .
+cd backend
+npm install
+```
+
+Crie o arquivo `.env` a partir do modelo:
+
+```bash
+# Windows (cmd)
+copy .env.example .env
+
+# Linux / macOS / Git Bash
+cp .env.example .env
+```
+
+O conteúdo do `.env` é:
+
+```
+PORT=3000
+```
+
+Gere o banco inicial com os 6 filmes de exemplo:
+
+```bash
+npm run seed
+```
+
+Saída esperada: `6 filmes gravados`. O comando cria `data/filmes.json`.
+Atenção: rodar o seed de novo **sobrescreve** o arquivo e apaga os filmes que você cadastrou.
+
+Inicie o servidor:
+
+```bash
+npm run dev     # reinicia sozinho a cada arquivo salvo
 # ou
-python -m http.server 8000
+npm start       # sem recarga automática
 ```
 
-##  Como funciona
+A API fica em `http://localhost:3000`. Para encerrar, use `Ctrl + C`.
 
-1. **Estado**: a lista de filmes vive em um array (`filmes`). Na primeira visita ele é preenchido com 6 filmes de exemplo (`filmesIniciais`).
-2. **Renderização**: `atualizar()` aplica os filtros (busca + status) e `renderizarCards()` recria os cards usando `DocumentFragment`.
-3. **Persistência**: a cada adicionar, editar ou remover, a lista é gravada em `localStorage` na chave `cinetrack:filmes`.
-4. **Eventos**: cliques em *Editar* e *Remover* usam **delegação de eventos** no container `#lista`, então funcionam mesmo em cards criados dinamicamente.
+### Scripts do backend
 
-> 💡 Para resetar os dados de exemplo, rode `localStorage.removeItem("cinetrack:filmes")` no console do navegador e recarregue a página.
+| Comando | O que faz |
+| --- | --- |
+| `npm run seed` | Grava `data/filmes.json` com os filmes iniciais |
+| `npm run dev` | Sobe o servidor com recarga automática |
+| `npm start` | Sobe o servidor sem recarga |
 
-##  Ideias para o futuro
+## Como rodar o frontend
 
-- [ ] Upload de pôster em vez de URL
-- [ ] Ordenação por nota, ano ou título
-- [ ] Filtro por gênero
-- [ ] Exportar e importar a lista em JSON
-- [ ] Tema claro/escuro
-- [ ] Integração com uma API de filmes (ex.: TMDB)
+Em **outro terminal**, com o backend já rodando:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Abra o endereço que o Vite mostrar no terminal (normalmente `http://localhost:5173`).
+
+Para gerar o build de produção:
+
+```bash
+npm run build
+```
+
+Os arquivos otimizados ficam em `frontend/dist/`.
+
+> O frontend espera a API em `http://localhost:3000`. Se mudar a porta no `.env`, ajuste a constante `BASE` em `frontend/src/api.js`.
+
+## API
+
+URL base: `http://localhost:3000`
+
+| Método | Rota | Descrição | Respostas |
+| --- | --- | --- | --- |
+| GET | `/filmes` | Lista todos os filmes. Aceita `?status=` para filtrar | 200 |
+| GET | `/filmes/:id` | Retorna um filme pelo id | 200, 404 |
+| POST | `/filmes` | Cria um filme (corpo JSON) | 201, 400 |
+| PUT | `/filmes/:id` | Atualiza um filme (o id é preservado) | 200, 404 |
+| DELETE | `/filmes/:id` | Remove um filme | 204, 404 |
+
+Respostas de erro têm o formato `{ "erro": "mensagem" }`.
+
+### Exemplos
+
+```bash
+# listar
+curl http://localhost:3000/filmes
+
+# filtrar por status
+curl "http://localhost:3000/filmes?status=quero"
+
+# buscar um filme
+curl http://localhost:3000/filmes/4
+```
+
+Corpo de exemplo para `POST /filmes` (cabeçalho `Content-Type: application/json`):
+
+```json
+{
+  "titulo": "Tenet",
+  "ano": 2020,
+  "genero": "Ficção científica",
+  "nota": 4,
+  "status": "quero",
+  "comentario": "Quero ver no fim de semana",
+  "poster": ""
+}
+```
+
+Apenas `titulo` e `ano` são obrigatórios. O `id` é gerado pelo servidor.
+
+## Estrutura dos dados
+
+| Campo | Tipo | Regra |
+| --- | --- | --- |
+| `id` | Número | Gerado automaticamente |
+| `titulo` | Texto | Obrigatório |
+| `ano` | Número | Obrigatório |
+| `genero` | Texto | Opcional |
+| `nota` | Número | De 1 a 5 estrelas |
+| `status` | Texto | `assistido`, `assistindo` ou `quero` |
+| `comentario` | Texto | Opcional |
+| `poster` | URL | Opcional; sem valor, o app mostra um espaço reservado |
+
+## Variáveis de ambiente
+
+| Variável | Padrão | Descrição |
+| --- | --- | --- |
+| `PORT` | `3000` | Porta em que a API escuta |
+
+O arquivo `.env` não é versionado (está no `.gitignore`). Use o `.env.example` como modelo.
 
 ## Autores
 
-| Nome | RA |
-|---|---|
-| **Henrique M. Neves da Silva** | ra134557 |
-| **Hiago A. Dantas Teixeira** | ra139001 |
+- Henrique M. Neves da Silva (ra134557)
+- Hiago A. Dantas Teixeira (ra139001)
+
+Professor: Lucas de Oliveira Teixeira, Departamento de Informática, UEM.
 
 ---
 
-<div align="center">
-
-Feito com 💜 e muita pipoca na **UEM**
-*Av. Colombo, 5790 · Jd. Universitário · Maringá, PR · CEP 87020-900*
-
-CineTrack · UEM · © 2026
-
-</div>
+CineTrack - UEM | Direitos © 2026
