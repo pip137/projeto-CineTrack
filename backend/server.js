@@ -13,6 +13,9 @@ app.use(cors());
 app.use(morgan("dev")); 
 app.use(express.json());
 
+app.listen(3000, () =>
+console.log("API na porta 3000"));
+
 
 function lerFilmes() {
     return JSON.parse(fs.readFileSync(ARQUIVO, "utf8"));
@@ -84,6 +87,33 @@ app.delete("/filmes/:id", (req, res) => {
     res.sendStatus(204); // sucesso, sem corpo
 });
 
+app.get("/tmdb/search", async (req, res) => {
+    const q = req.query.q;
+    if (!q) return res.status(400).json({ erro: "Informe o parâmetro q" });
+    if (!process.env.TMDB_KEY) {
+        return res.status(500).json({ erro: "TMDB_KEY não configurada" });
+    }
 
-app.listen(3000, () =>
-console.log("API na porta 3000"));
+    try {
+        const url =
+        "https://api.themoviedb.org/3/search/movie" +
+        `?api_key=${process.env.TMDB_KEY}&language=pt-BR&query=${encodeURIComponent(q)}`;
+        const r = await fetch(url);
+        if (!r.ok) return res.status(502).json({ erro: "Falha ao consultar a TMDB" });
+
+        const dados = await r.json();
+        res.json(
+        dados.results.map((f) => ({
+            titulo: f.title,
+            ano: Number((f.release_date || "").slice(0, 4)) || null,
+            poster: f.poster_path
+            ? `https://image.tmdb.org/t/p/w300_and_h450_face${f.poster_path}`
+            : "",
+        }))
+        );
+    } catch {
+        res.status(502).json({ erro: "Falha ao consultar a TMDB" });
+    }
+});
+
+
