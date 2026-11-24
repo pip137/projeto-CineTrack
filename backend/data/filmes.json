@@ -1,15 +1,5 @@
 [
   {
-    "id": 1,
-    "titulo": "A Origem",
-    "ano": 2010,
-    "genero": "ficcao",
-    "poster": "https://media.themoviedb.org/t/p/w300_and_h450_face/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg",
-    "nota": 5,
-    "status": "assistido",
-    "comentario": "Revejo sempre."
-  },
-  {
     "id": 2,
     "titulo": "Parasita",
     "ano": 2019,
@@ -58,5 +48,15 @@
     "nota": 4,
     "status": "quero",
     "comentario": ""
+  },
+  {
+    "id": 7,
+    "titulo": "Tenet",
+    "ano": 2020,
+    "genero": "Ficção científica",
+    "nota": 4,
+    "status": "quero",
+    "comentario": "Quero ver no fim de semana",
+    "poster": ""
   }
 ]
